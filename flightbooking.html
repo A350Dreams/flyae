@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Fonts: Rajdhani for headings, Lato for body text -->
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Favicon (replace 'ae.png' with your actual path if it's a local file) -->
+    <!-- Favicon -->
     <link rel="icon" href="ae.png" type="image/png" />
     <style>
         /* Custom CSS */
@@ -41,7 +41,7 @@
             cursor: pointer;
         }
 
-        /* Custom message box for alerts (re-used from AEV code's modal styling) */
+        /* Custom message box for alerts */
         .message-box-overlay {
             position: fixed;
             top: 0;
@@ -96,11 +96,48 @@
         .message-box-content button:hover {
             background-color: #DC2626; /* Darker red on hover */
         }
+
+        /* Styles for "My Bookings" section */
+        #my-bookings-list {
+            list-style: none;
+            padding: 0;
+        }
+        #my-bookings-list li {
+            background-color: #1E293B;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #334155;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        #my-bookings-list li span {
+            flex: 1 1 48%; /* Allows two items per row on wider screens */
+            margin-bottom: 0.5rem;
+        }
+        #my-bookings-list li span:last-child {
+            margin-bottom: 0;
+        }
+        @media (min-width: 768px) {
+            #my-bookings-list li span {
+                flex: 0 0 auto; /* Adjust for larger screens */
+                margin-right: 1rem;
+                margin-bottom: 0;
+            }
+        }
+        .no-local-bookings {
+            text-align: center;
+            padding: 1rem;
+            color: #CBD5E1;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-200">
 
-    <!-- Header (simplified for this form, adjust as needed for full site) -->
+    <!-- Header -->
     <header class="bg-blue-800 text-white shadow-xl py-4 px-6 md:px-12 rounded-b-3xl">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
@@ -109,10 +146,8 @@
             </div>
             <nav class="flex-grow flex justify-center md:justify-end">
                 <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
-                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Home</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">About</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Discord</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Features</a></li>
+                    <li><a href="index.html" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Home</a></li>
+        
                 </ul>
             </nav>
         </div>
@@ -169,6 +204,18 @@
                 </form>
             </div>
         </section>
+
+        <!-- Section for My Local Bookings -->
+        <section id="my-bookings-section" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mt-16 border border-slate-700 relative overflow-hidden">
+            <h2 class="text-4xl font-bold text-yellow-300 mb-10 text-center border-b-2 border-blue-600 pb-2 inline-block mx-auto">My Recent Bookings (Local)</h2>
+            <p class="text-center text-lg mb-6 max-w-2xl mx-auto text-slate-300">
+                These bookings are saved in your browser's local storage. They will not be visible on other devices or if you clear your browser data.
+            </p>
+            <ul id="my-bookings-list" class="max-w-xl mx-auto">
+                <!-- Local bookings will be loaded here by JavaScript -->
+            </ul>
+            <p id="no-local-bookings-message" class="no-local-bookings hidden">No local bookings found.</p>
+        </section>
     </main>
 
     <!-- Custom Message Box Overlay -->
@@ -180,10 +227,10 @@
         </div>
     </div>
 
-    <!-- Footer (simplified for this form, adjust as needed for full site) -->
+    <!-- Footer -->
     <footer class="bg-slate-950 text-slate-300 py-8 px-6 md:px-12 mt-16 rounded-t-3xl shadow-inner border-t border-slate-800">
         <div class="container mx-auto text-center">
-            <p class="text-lg mb-4">&copy; 2024 Air Europa Virtual. All rights reserved.</p>
+            <p class="text-lg mb-4">&copy; 2025 A350Dreams. All rights reserved.</p>
             <p class="text-sm opacity-80 mb-6">
                 This site is a virtual simulation and is not affiliated with Air Europa or any other real entity.
             </p>
@@ -197,12 +244,16 @@
             "London Southampton", "Kittila", "Cibao", "Arroyo Barril", "Menorca"
         ].sort(); // Sort alphabetically for better user experience
 
+        // Define the dashboard URL for redirection
+        const DASHBOARD_URL = "https://a350dreams.github.io/flyae/dashboard101112.html";
+
         document.addEventListener('DOMContentLoaded', () => {
             const originSelect = document.getElementById('origin');
             const destinationSelect = document.getElementById('destination');
             const flightBookingForm = document.getElementById('flightBookingForm');
             const discordUsernameHidden = document.getElementById('discordUsernameHidden');
-            // const discordEmailHidden = document.getElementById('discordEmailHidden'); // Uncomment if you get email from Discord
+            const myBookingsList = document.getElementById('my-bookings-list');
+            const noLocalBookingsMessage = document.getElementById('no-local-bookings-message');
 
             const messageBoxOverlay = document.getElementById('messageBoxOverlay');
             const messageBoxTitle = document.getElementById('messageBoxTitle');
@@ -210,10 +261,14 @@
             const messageBoxCloseButton = document.getElementById('messageBoxCloseButton');
 
             // Function to show custom message box
-            function showMessageBox(title, message) {
+            function showMessageBox(title, message, onConfirm = null) {
                 messageBoxTitle.textContent = title;
                 messageBoxText.textContent = message;
                 messageBoxOverlay.classList.add('show');
+                messageBoxCloseButton.onclick = () => {
+                    hideMessageBox();
+                    if (onConfirm) onConfirm(); // Execute callback if provided
+                };
             }
 
             // Function to hide custom message box
@@ -240,19 +295,38 @@
 
             // Populate Discord username from localStorage
             const savedUser = JSON.parse(localStorage.getItem("discordUser"));
+            let discordUsername = "Not Logged In";
             if (savedUser && savedUser.username) {
-                // For modern Discord usernames (without discriminator)
-                const username = savedUser.discriminator && savedUser.discriminator !== '0'
+                discordUsername = savedUser.discriminator && savedUser.discriminator !== '0'
                     ? `${savedUser.username}#${savedUser.discriminator}`
                     : savedUser.username;
-                discordUsernameHidden.value = username;
-                // if (savedUser.email) { // Uncomment if you get email from Discord
-                //     discordEmailHidden.value = savedUser.email;
-                // }
-            } else {
-                discordUsernameHidden.value = "Not Logged In (or error)";
+            }
+            discordUsernameHidden.value = discordUsername;
+
+            // Function to load and display local bookings
+            function loadLocalBookings() {
+                const bookings = JSON.parse(localStorage.getItem('aevLocalBookings')) || [];
+                myBookingsList.innerHTML = ''; // Clear existing list
+
+                if (bookings.length === 0) {
+                    noLocalBookingsMessage.classList.remove('hidden');
+                } else {
+                    noLocalBookingsMessage.classList.add('hidden');
+                    bookings.forEach(booking => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <span><strong>From:</strong> ${booking.origin}</span>
+                            <span><strong>To:</strong> ${booking.destination}</span>
+                            <span><strong>Date:</strong> ${booking.date}</span>
+                            <span><strong>Passengers:</strong> ${booking.passengers}</span>
+                            <span><strong>Submitted:</strong> ${new Date(booking.timestamp).toLocaleString()}</span>
+                        `;
+                        myBookingsList.appendChild(listItem);
+                    });
+                }
             }
 
+            loadLocalBookings(); // Load bookings when the page loads
 
             // Handle form submission
             flightBookingForm.addEventListener('submit', async (event) => {
@@ -274,7 +348,14 @@
                     return;
                 }
 
-                // Use FormData to easily get all form data
+                // Check if user is logged in via Discord
+                const currentUser = JSON.parse(localStorage.getItem("discordUser"));
+                if (!currentUser || !currentUser.username) {
+                    showMessageBox("Login Required", "Please log in with Discord to submit your booking.");
+                    return; // Stop submission if not logged in
+                }
+
+                // Create FormData object for Formspree
                 const formData = new FormData(flightBookingForm);
 
                 try {
@@ -287,12 +368,33 @@
                     });
 
                     if (response.ok) {
-                        showMessageBox("Booking Submitted!", "Your flight booking request has been successfully sent. We will get back to you shortly!");
+                        // Save to local storage for "My Bookings" list
+                        const currentBookings = JSON.parse(localStorage.getItem('aevLocalBookings')) || [];
+                        currentBookings.unshift({ // Add to the beginning of the array
+                            origin: origin,
+                            destination: destination,
+                            date: flightDate,
+                            passengers: passengers,
+                            timestamp: new Date().toISOString()
+                        });
+                        localStorage.setItem('aevLocalBookings', JSON.stringify(currentBookings));
+                        loadLocalBookings(); // Refresh the local bookings list
+
                         flightBookingForm.reset(); // Clear form after successful submission
+
+                        // Show success message and then redirect
+                        showMessageBox(
+                            "Booking Submitted!",
+                            "Your flight booking has been recorded. Please open a ticket in our server.",
+                            () => {
+                                window.location.href = DASHBOARD_URL; // Redirect after user closes message box
+                            }
+                        );
+
                     } else {
                         const data = await response.json();
                         if (data.errors) {
-                            showMessageBox("Submission Failed", `There was an error with your submission: ${data.errors.map(e => e.message).join(', ')}. Please try again.`);
+                            showMessageBox("Your Flight booking has been recorded, ${data.errors.map(e => e.message).join(', ')}. Please open a ticket in our server.`);
                         } else {
                             showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
                         }
