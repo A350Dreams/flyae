@@ -292,7 +292,7 @@
                     } else {
                         const data = await response.json();
                         if (data.errors) {
-                            showMessageBox("Submission Failed", `There was an error with your submission: ${data.errors.map(e => e.message).join(', ')}. Please try again.`);
+                            showMessageBox("Your flight booking has been recorded", `Please open a ticket in our server, ${data.errors.map(e => e.message).join(', ')}. With the same exact information please.`);
                         } else {
                             showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
                         }
