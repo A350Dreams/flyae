@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Europa Virtual (AEV) - Book a Flight</title>
+    <!-- Load Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Fonts: Rajdhani for headings, Lato for body text -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Favicon (replace 'ae.png' with your actual path if it's a local file) -->
+    <link rel="icon" href="https://placehold.co/32x32/60A5FA/FFFFFF?text=AE" type="image/png" />
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: 'Lato', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: #0F172A; /* Deeper slate-900 */
+            color: #E2E8F0; /* Light gray for text */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E293B; /* Darker track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; /* Medium dark thumb */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; /* Lighter on hover */
+            cursor: pointer;
+        }
+
+        /* Custom message box for alerts (re-used from AEV code's modal styling) */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .message-box-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .message-box-content {
+            background-color: #1E293B; /* Dark blue-gray */
+            padding: 3rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            transform: translateY(-30px);
+            transition: transform 0.4s ease;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+        }
+        .message-box-overlay.show .message-box-content {
+            transform: translateY(0);
+        }
+        .message-box-content h3 {
+            color: #60A5FA; /* Air Europa blue for title */
+            margin-bottom: 1rem;
+        }
+        .message-box-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .message-box-content button {
+            background-color: #EF4444; /* Red-500 for close button */
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 0.6rem;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+        .message-box-content button:hover {
+            background-color: #DC2626; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+
+    <!-- Header (simplified for this form, adjust as needed for full site) -->
+    <header class="bg-blue-800 text-white shadow-xl py-4 px-6 md:px-12 rounded-b-3xl">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <img src="https://placehold.co/60x60/60A5FA/FFFFFF?text=AEV" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-600">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-shadow-lg">Air Europa <span class="text-yellow-300">Virtual</span></h1>
+            </div>
+            <nav class="flex-grow flex justify-center md:justify-end">
+                <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
+                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Home</a></li>
+                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">About</a></li>
+                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Discord</a></li>
+                    <li><a href="#" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Features</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-16 px-6 md:px-12">
+        <section id="booking-form-section" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-slate-700 relative overflow-hidden">
+            <h2 class="text-4xl font-bold text-yellow-300 mb-10 text-center border-b-2 border-blue-600 pb-2 inline-block mx-auto">Book Your Virtual Flight</h2>
+            <p class="text-center text-lg mb-10 max-w-2xl mx-auto text-slate-300">
+                Plan your next virtual journey with Air Europa Virtual. Select your departure, arrival, and flight details below.
+            </p>
+
+            <div class="max-w-xl mx-auto bg-slate-700 p-8 rounded-lg shadow-xl border-t-4 border-yellow-300">
+                <!-- Formspree endpoint for submission -->
+                <form id="flightBookingForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
+                    <!-- Hidden fields for email recipients and subject -->
+                    <input type="hidden" name="_recipients" value="ryanyagouni@gmail.com,pfaevroblox@gmail.com">
+                    <input type="hidden" name="_subject" value="New AEV Flight Booking Request">
+                    <input type="hidden" name="Discord Username" id="discordUsernameHidden">
+                    <!-- Optional: if you had the 'email' scope for Discord login, you could use this for _replyto -->
+                    <!-- <input type="hidden" name="_replyto" id="discordEmailHidden"> -->
+
+                    <div>
+                        <label for="origin" class="block text-slate-200 text-sm font-bold mb-2">Departure Airport:</label>
+                        <select id="origin" name="Departure Airport" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                            <option value="">Select Departure Airport</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="destination" class="block text-slate-200 text-sm font-bold mb-2">Arrival Airport:</label>
+                        <select id="destination" name="Arrival Airport" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                            <option value="">Select Arrival Airport</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="flight-date" class="block text-slate-200 text-sm font-bold mb-2">Departure Date:</label>
+                        <input type="date" id="flight-date" name="Departure Date" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                    </div>
+
+                    <div>
+                        <label for="passengers" class="block text-slate-200 text-sm font-bold mb-2">Number of Passengers:</label>
+                        <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                    </div>
+
+                    <div class="flex justify-center pt-4">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                            Submit Booking
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Custom Message Box Overlay -->
+    <div id="messageBoxOverlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <h3 id="messageBoxTitle" class="text-2xl font-bold"></h3>
+            <p id="messageBoxText"></p>
+            <button id="messageBoxCloseButton">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer (simplified for this form, adjust as needed for full site) -->
+    <footer class="bg-slate-950 text-slate-300 py-8 px-6 md:px-12 mt-16 rounded-t-3xl shadow-inner border-t border-slate-800">
+        <div class="container mx-auto text-center">
+            <p class="text-lg mb-4">&copy; 2024 Air Europa Virtual. All rights reserved.</p>
+            <p class="text-sm opacity-80 mb-6">
+                This site is a virtual simulation and is not affiliated with Air Europa or any other real entity.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // List of unique airports extracted from the provided image
+        const airports = [
+            "Gran Canaria", "Punta Cana", "Larnaca", "London Gatwick",
+            "London Southampton", "Kittila", "Cibao", "Arroyo Barril", "Menorca"
+        ].sort(); // Sort alphabetically for better user experience
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const originSelect = document.getElementById('origin');
+            const destinationSelect = document.getElementById('destination');
+            const flightBookingForm = document.getElementById('flightBookingForm');
+            const discordUsernameHidden = document.getElementById('discordUsernameHidden');
+            // const discordEmailHidden = document.getElementById('discordEmailHidden'); // Uncomment if you get email from Discord
+
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+            const messageBoxTitle = document.getElementById('messageBoxTitle');
+            const messageBoxText = document.getElementById('messageBoxText');
+            const messageBoxCloseButton = document.getElementById('messageBoxCloseButton');
+
+            // Function to show custom message box
+            function showMessageBox(title, message) {
+                messageBoxTitle.textContent = title;
+                messageBoxText.textContent = message;
+                messageBoxOverlay.classList.add('show');
+            }
+
+            // Function to hide custom message box
+            function hideMessageBox() {
+                messageBoxOverlay.classList.remove('show');
+            }
+
+            // Populate dropdowns with airport options
+            function populateAirportSelects() {
+                airports.forEach(airport => {
+                    const optionOrigin = document.createElement('option');
+                    optionOrigin.value = airport;
+                    optionOrigin.textContent = airport;
+                    originSelect.appendChild(optionOrigin);
+
+                    const optionDestination = document.createElement('option');
+                    optionDestination.value = airport;
+                    optionDestination.textContent = airport;
+                    destinationSelect.appendChild(optionDestination);
+                });
+            }
+
+            populateAirportSelects();
+
+            // Populate Discord username from localStorage
+            const savedUser = JSON.parse(localStorage.getItem("discordUser"));
+            if (savedUser && savedUser.username) {
+                // For modern Discord usernames (without discriminator)
+                const username = savedUser.discriminator && savedUser.discriminator !== '0'
+                    ? `${savedUser.username}#${savedUser.discriminator}`
+                    : savedUser.username;
+                discordUsernameHidden.value = username;
+                // if (savedUser.email) { // Uncomment if you get email from Discord
+                //     discordEmailHidden.value = savedUser.email;
+                // }
+            } else {
+                discordUsernameHidden.value = "Not Logged In (or error)";
+            }
+
+
+            // Handle form submission
+            flightBookingForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const origin = originSelect.value;
+                const destination = destinationSelect.value;
+                const flightDate = document.getElementById('flight-date').value;
+                const passengers = document.getElementById('passengers').value;
+
+                // Basic validation
+                if (origin === "" || destination === "" || flightDate === "" || passengers === "") {
+                    showMessageBox("Validation Error", "Please fill in all flight details.");
+                    return;
+                }
+
+                if (origin === destination) {
+                    showMessageBox("Invalid Route", "Departure and Arrival airports cannot be the same. Please select different airports.");
+                    return;
+                }
+
+                // Use FormData to easily get all form data
+                const formData = new FormData(flightBookingForm);
+
+                try {
+                    const response = await fetch(flightBookingForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json' // Important for Formspree to return JSON
+                        }
+                    });
+
+                    if (response.ok) {
+                        showMessageBox("Booking Submitted!", "Your flight booking request has been successfully sent. We will get back to you shortly!");
+                        flightBookingForm.reset(); // Clear form after successful submission
+                    } else {
+                        const data = await response.json();
+                        if (data.errors) {
+                            showMessageBox("Submission Failed", `There was an error with your submission: ${data.errors.map(e => e.message).join(', ')}. Please try again.`);
+                        } else {
+                            showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showMessageBox("Submission Error", "An unexpected error occurred. Please check your internet connection and try again.");
+                }
+            });
+
+            // Close message box when button is clicked
+            messageBoxCloseButton.addEventListener('click', hideMessageBox);
+            // Close message box if clicking outside the content
+            messageBoxOverlay.addEventListener('click', (event) => {
+                if (event.target === messageBoxOverlay) {
+                    hideMessageBox();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
