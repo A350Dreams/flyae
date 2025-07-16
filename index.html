@@ -13,7 +13,7 @@
             font-family: 'Lato', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            background-color: #0F172A; /* Deeper slate-900 */
+            background-color: #0F172A; /* Deep slate-900 */
             color: #E2E8F0; /* Light gray for text */
         }
         h1, h2, h3, h4 {
@@ -30,12 +30,52 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; /* Medium dark thumb */
+            background: #475569; /* Medium dark thumb - slightly lighter for better contrast */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; /* Lighter on hover */
+            background: #64748B; /* Even lighter on hover */
             cursor: pointer;
+        }
+
+        /* Text Shadow for titles */
+        .text-shadow-light {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        .text-shadow-strong {
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Button Hover Effects */
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Backgrounds with subtle texture/gradient */
+        .section-bg-gradient {
+            background: linear-gradient(145deg, #1A202C, #2D3748);
+            position: relative;
+            overflow: hidden;
+        }
+        .section-bg-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23a0aec0\' fill-opacity=\'0.08\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zm12 14v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm-24 24v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm-24 24v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zM0 40v-4h-2v4H0v2h4v4h2v-4h4v-2H6v-4H2zm0-10V0h-2v4H0v2h4v4h2V6h4V4h-4zm0-10V0h-2v4H0v2h4v4h2V6h4V4h-4zM24 40v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zM48 40v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4z\' fill=\'%239C92AC\' fill-opacity=\'0.05\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); /* Subtle pattern */
+            opacity: 0.05; /* Very subtle */
+            z-index: 0;
+        }
+        .section-bg-gradient > div {
+            position: relative;
+            z-index: 1;
         }
 
         /* Custom login modal */
@@ -236,10 +276,11 @@
         .social-icon {
             width: 32px; /* Standard size for social icons */
             height: 32px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
         .social-icon:hover {
             transform: translateY(-3px);
+            filter: brightness(1.2); /* Slight brightness on hover */
         }
     </style>
 </head>
@@ -251,34 +292,33 @@
         <div class="loading-text">Loading Air Europa Virtual...</div>
     </div>
 
-    <header class="bg-blue-800 text-white shadow-xl py-4 px-6 md:px-12 rounded-b-3xl">
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-2xl py-4 px-6 md:px-12 rounded-b-3xl">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-600">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-shadow-lg">Air Europa <span class="text-yellow-300">Virtual</span></h1>
+                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border-2 border-blue-400">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-shadow-light">Air Europa <span class="text-yellow-300">Virtual</span></h1>
             </div>
             <nav class="flex-grow flex justify-center md:justify-end">
                 <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
-                    <li><a href="index.html" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Home</a></li>
-                    <li><a href="#about" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">About</a></li>
-                    <li><a href="#features" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Features</a></li>
-                     <li><a href="flightbooking.html" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Book Your Flight</a></li>
-                   
+                    <li><a href="index.html" class="relative hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-yellow-300 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100">Home</a></li>
+                    <li><a href="#about" class="relative hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-yellow-300 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100">About</a></li>
+                    <li><a href="#features" class="relative hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-yellow-300 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100">Features</a></li>
+                    <li><a href="flightbooking.html" class="relative hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-yellow-300 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100">Book Your Flight</a></li>
                 </ul>
             </nav>
             <div class="user-actions mt-4 md:mt-0 md:ml-8 flex items-center">
-                </div>
+            </div>
         </div>
     </header>
 
-    <section id="home" class="relative bg-gradient-to-br from-blue-700 to-blue-900 text-white py-24 md:py-40 flex items-center justify-center overflow-hidden rounded-b-3xl shadow-2xl">
+    <section id="home" class="relative bg-gradient-to-br from-blue-700 to-indigo-900 text-white py-24 md:py-40 flex items-center justify-center overflow-hidden rounded-b-3xl shadow-2xl">
         <div class="absolute inset-0 opacity-15" style="background-image: url('data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23a0aec0\' fill-opacity=\'0.08\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zm12 14v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm-24 24v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm-24 24v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zM0 40v-4h-2v4H0v2h4v4h2v-4h4v-2H6v-4H2zm0-10V0h-2v4H0v2h4v4h2V6h4V4h-4zm0-10V0h-2v4H0v2h4v4h2V6h4V4h-4zM24 40v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zM48 40v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4zm0-10V0h-2v4h-4v2h4v4h2V6h4V4h-4z\' fill=\'%239C92AC\' fill-opacity=\'0.05\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
         <div class="container mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight drop-shadow-xl text-shadow">Experience Virtual Aviation. Limitless.</h2>
-            <p class="text-xl md:text-2xl mb-12 max-w-4xl mx-auto opacity-90 font-light">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight text-shadow-strong">Experience Virtual Aviation. Limitless.</h2>
+            <p class="text-xl md:text-2xl mb-12 max-w-4xl mx-auto opacity-95 font-light">
                 Welcome to Air Europa Virtual (AEV) – where realistic European flight simulation meets a passionate community. Join us **for free** and explore the skies with unparalleled freedom.
             </p>
-            <a href="#join" class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-4 px-10 rounded-full text-2xl shadow-xl transform hover:scale-105 transition duration-300 ease-in-out inline-block">
+            <a href="#join" class="btn-primary bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-4 px-10 rounded-full text-2xl shadow-xl transform hover:scale-105 transition duration-300 ease-in-out inline-block">
                 Start Your Journey
             </a>
         </div>
@@ -286,14 +326,13 @@
 
     <main class="container mx-auto py-16 px-6 md:px-12">
 
-        <section id="about" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-slate-700 relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-48 h-48 bg-blue-700 opacity-10 rounded-full filter blur-3xl"></div>
+        <section id="about" class="section-bg-gradient p-8 md:p-12 rounded-2xl shadow-2xl mb-16 border border-slate-700">
             <div class="flex flex-col md:flex-row items-center md:space-x-12">
                 <div class="md:w-1/2 mb-8 md:mb-0 transform hover:scale-102 transition-transform duration-300">
-                    <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="rounded-xl shadow-lg w-full h-auto border border-slate-600">
+                    <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="rounded-xl shadow-lg w-full h-auto border-2 border-blue-500">
                 </div>
                 <div class="md:w-1/2 text-slate-300">
-                    <h3 class="text-4xl font-bold text-blue-400 mb-6 border-b-2 border-blue-600 pb-2 inline-block">About Air Europa Virtual</h3>
+                    <h3 class="text-4xl font-bold text-blue-400 mb-6 border-b-2 border-blue-600 pb-2 inline-block text-shadow-light">About Air Europa Virtual</h3>
                     <p class="text-lg leading-relaxed mb-4">
                         Air Europa Virtual (AEV) is a thriving community dedicated to the art of flight simulation, mirroring the real-world operations of Air Europa. Our mission is to provide an immersive and authentic experience for virtual pilots worldwide.
                     </p>
@@ -305,17 +344,15 @@
                     </p>
                 </div>
             </div>
-            <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-700 opacity-10 rounded-full filter blur-3xl"></div>
         </section>
 
-        <section id="discord" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-slate-700 relative overflow-hidden">
-            <div class="absolute -top-10 -left-10 w-48 h-48 bg-purple-700 opacity-10 rounded-full filter blur-3xl"></div>
+        <section id="discord" class="section-bg-gradient p-8 md:p-12 rounded-2xl shadow-2xl mb-16 border border-slate-700">
             <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-12">
                 <div class="md:w-1/2 mb-8 md:mb-0 transform hover:scale-102 transition-transform duration-300">
-                    <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="rounded-xl shadow-lg w-full h-auto border border-slate-600">
+                    <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="rounded-xl shadow-lg w-full h-auto border-2 border-purple-500">
                 </div>
                 <div class="md:w-1/2 text-slate-300">
-                    <h3 class="text-4xl font-bold text-blue-400 mb-6 border-b-2 border-blue-600 pb-2 inline-block">Connect on Discord</h3>
+                    <h3 class="text-4xl font-bold text-blue-400 mb-6 border-b-2 border-blue-600 pb-2 inline-block text-shadow-light">Connect on Discord</h3>
                     <p class="text-lg leading-relaxed mb-4">
                         Our Discord server is the pulsing heart of the AEV community. It's the go-to place for pilots to connect, share insights, seek support, and participate in all our virtual airline activities.
                     </p>
@@ -331,49 +368,48 @@
                     </p>
                 </div>
             </div>
-            <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-purple-700 opacity-10 rounded-full filter blur-3xl"></div>
         </section>
 
-        <section id="features" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-slate-700">
-            <h3 class="text-4xl font-bold text-blue-400 mb-10 text-center border-b-2 border-blue-600 pb-2 inline-block mx-auto">Why Choose Air Europa Virtual?</h3>
+        <section id="features" class="section-bg-gradient p-8 md:p-12 rounded-2xl shadow-2xl mb-16 border border-slate-700">
+            <h3 class="text-4xl font-bold text-blue-400 mb-10 text-center border-b-2 border-blue-600 pb-2 inline-block mx-auto text-shadow-light">Why Choose Air Europa Virtual?</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">🆓</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">🆓</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">No Membership Fees</h4>
                     <p class="text-slate-300">
                         Experience the full virtual airline without any cost. Your passion is the only requirement.
                     </p>
                 </div>
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">🌍</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">🌍</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">Diverse Route Network</h4>
                     <p class="text-slate-300">
                         Explore Air Europa's extensive real-world routes across continents.
                     </p>
                 </div>
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">✈️</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">✈️</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">Authentic Flight Experience</h4>
                     <p class="text-slate-300">
                         Simulate flights with procedures and immersion inspired by real Air Europa operations.
                     </p>
                 </div>
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">🤝</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">🤝</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">Vibrant & Welcoming Community</h4>
                     <p class="text-slate-300">
                         Connect with friendly pilots, share knowledge, and fly together.
                     </p>
                 </div>
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">🗓️</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">🗓️</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">Regular Events & Challenges</h4>
                     <p class="text-slate-300">
                         Participate in group flights, fly-ins, and engaging challenges to test your skills.
                     </p>
                 </div>
                 <div class="bg-slate-700 p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-600 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold">🎮</div>
+                    <div class="flex items-center justify-center h-20 w-20 bg-blue-600 text-yellow-300 rounded-full mb-4 text-4xl font-bold drop-shadow-lg">🎮</div>
                     <h4 class="text-xl font-semibold text-blue-300 mb-3">Simulator Friendly</h4>
                     <p class="text-slate-300">
                         Fly on MSFS, X-Plane, P3D, or your preferred simulator – we support them all.
@@ -383,12 +419,12 @@
         </section>
 
         <section id="join" class="bg-gradient-to-br from-blue-700 to-indigo-900 text-white p-8 md:p-16 rounded-2xl shadow-2xl text-center border border-blue-600">
-            <h3 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">Ready to Take Off with AEV?</h3>
+            <h3 class="text-4xl md:text-5xl font-bold mb-6 text-shadow-light">Ready to Take Off with AEV?</h3>
             <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto font-light">
                 Your journey into realistic virtual aviation starts here. Click the button below to join our Discord server and become a part of the Air Europa Virtual family.
             </p>
             <a href="https://discord.gg/sr4Na4j28B" target="_blank" rel="noopener noreferrer"
-               class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-4 px-12 rounded-full text-2xl shadow-xl transform hover:scale-105 transition duration-300 ease-in-out inline-block animate-pulse">
+               class="btn-primary bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-4 px-12 rounded-full text-2xl shadow-xl transform hover:scale-105 transition duration-300 ease-in-out inline-block animate-pulse">
                 Join AEV Discord Now!
             </a>
             <p class="text-sm mt-6 opacity-80">
@@ -401,10 +437,13 @@
         <div class="container mx-auto text-center">
             <p class="text-lg mb-4">&copy; 2025- A350Dreams. All rights reserved.</p>
             <p class="text-sm opacity-80 mb-6">
-                Made by A350Dreams to Air Europa Líneas Aéreas, S.A.U. Virtual.
+                Made by A350Dreams for Air Europa Líneas Aéreas, S.A.U. Virtual.
             </p>
-            <div class="flex justify-center space-x-8 mt-4">
-                          </div>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="social-icon" aria-label="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/256px-YouTube_full-color_icon_%282017%29.svg.png" alt="YouTube"></a>
+                <a href="#" class="social-icon" aria-label="Twitter"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/256px-X_logo_2023.svg.png" alt="Twitter"></a>
+                <a href="#" class="social-icon" aria-label="Instagram"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/256px-Instagram_icon.png" alt="Instagram"></a>
+            </div>
         </div>
     </footer>
 
@@ -471,7 +510,7 @@
          * @param {object} user - The Discord user object.
          */
         function showUser(user) {
-            const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png'; 
+            const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png';
             userActionsDiv.innerHTML = `
                 <div class="user-info">
                     <img src="${avatarUrl}" alt="${user.username} Avatar">
@@ -483,7 +522,7 @@
             // Attach event listener to the logout button
             document.getElementById("logout-btn").onclick = () => {
                 localStorage.removeItem("discordUser"); // Clear user data from local storage
-                window.location.replace(REDIRECT_URI); 
+                window.location.replace(REDIRECT_URI);
             };
 
             // Hide the login modal if it's currently shown
@@ -501,7 +540,7 @@
 
             // Show the modal
             loginModal.classList.add("show");
-            
+
             // Show the creator alert inside the modal after a short delay
             setTimeout(() => {
                 modalCreatorAlert.classList.add('show');
@@ -519,7 +558,7 @@
                 modalCreatorAlert.style.transform = 'translateY(-10px)';
                 setTimeout(() => {
                     modalCreatorAlert.style.display = 'none'; // Fully remove it after transition
-                }, 500); 
+                }, 500);
             } else {
                 modalLoginButton.classList.remove('enabled');
                 // Optionally, if you want the alert to reappear if they type something wrong after correct,
@@ -536,12 +575,12 @@
         // --- Main login state management logic ---
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
-        const token = params.get("access_token"); 
+        const token = params.get("access_token");
 
         const savedUser = JSON.parse(localStorage.getItem("discordUser"));
 
         if (token) {
-            window.history.replaceState({}, document.title, REDIRECT_URI); 
+            window.history.replaceState({}, document.title, REDIRECT_URI);
 
             fetch("https://discord.com/api/users/@me", {
                 headers: {
@@ -551,31 +590,31 @@
             .then(res => {
                 if (!res.ok) {
                     console.error("Discord API error:", res.status, res.statusText);
-                    localStorage.removeItem("discordUser"); 
-                    showLoginButton(); 
-                    throw new Error(`Failed to fetch user data from Discord: ${res.statusText}`); 
+                    localStorage.removeItem("discordUser");
+                    showLoginButton();
+                    throw new Error(`Failed to fetch user data from Discord: ${res.statusText}`);
                 }
-                return res.json(); 
+                return res.json();
             })
             .then(user => {
                 if (user.id) {
-                    localStorage.setItem("discordUser", JSON.stringify(user)); 
-                    showUser(user); 
+                    localStorage.setItem("discordUser", JSON.stringify(user));
+                    showUser(user);
                 } else {
                     console.error("Invalid Discord user data received:", user);
-                    localStorage.removeItem("discordUser"); 
-                    showLoginButton(); 
+                    localStorage.removeItem("discordUser");
+                    showLoginButton();
                 }
             })
             .catch(error => {
                 console.error("Error during Discord user fetch or processing:", error);
-                localStorage.removeItem("discordUser"); 
-                showLoginButton(); 
+                localStorage.removeItem("discordUser");
+                showLoginButton();
             });
         } else if (savedUser) {
-            showUser(savedUser); 
+            showUser(savedUser);
         } else {
-            showLoginButton(); 
+            showLoginButton();
         }
     </script>
 </body>
