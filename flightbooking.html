@@ -4,163 +4,302 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Europa Virtual (AEV) - Book a Flight</title>
-    <!-- Load Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Fonts: Rajdhani for headings, Lato for body text -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Favicon (replace 'ae.png' with your actual path if it's a local file) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="ae.png" type="image/png" />
     <style>
-        /* Custom CSS */
+        /* CUSTOM CSS FOR THE SLEEK, HIGH-TECH & INTUITIVE DESIGN */
+        /* These styles are consistent with your index.html's aesthetic */
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            background-color: #0F172A; /* Deeper slate-900 */
-            color: #E2E8F0; /* Light gray for text */
+            background-color: #F8FAFC; /* Lightest blue-gray for the main background */
+            color: #334155; /* Slate-700 for main body text */
         }
         h1, h2, h3, h4 {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
+            font-family: 'Inter', sans-serif; /* All headings use Inter */
+            font-weight: 800; /* Extra bold for most headings */
+            color: #0F172A; /* Darker slate-900 for strong headings */
         }
+        h1 { font-weight: 900; } /* Even bolder for the main title */
 
-        /* Custom scrollbar */
+        /* Custom scrollbar - sleek & modern */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1E293B; /* Darker track */
+            background: #E2E8F0; /* Light track */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; /* Medium dark thumb */
+            background: #64748B; /* Medium gray thumb */
             border-radius: 10px;
+            border: 2px solid #F8FAFC; /* Matches body background for subtle depth */
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; /* Lighter on hover */
+            background: #475569; /* Darker on hover */
             cursor: pointer;
         }
 
-        /* Custom message box for alerts (re-used from AEV code's modal styling) */
+        /* Header and Nav - Consistent with index.html */
+        .header-sleek {
+            background-color: #FFFFFF; /* White header background */
+            border-bottom: 1px solid #E2E8F0; /* Subtle bottom border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            padding-top: 1rem; /* Adjust padding for visual balance */
+            padding-bottom: 1rem;
+        }
+        .nav-link-sleek {
+            position: relative;
+            font-weight: 500;
+            color: #4A5568; /* Gray-700 for links */
+            transition: color 0.3s ease;
+            padding: 0.5rem 0; /* Vertical padding for the link text */
+        }
+        .nav-link-sleek::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; /* Space below link for underline */
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: #3B82F6; /* Bright blue accent */
+            border-radius: 2px;
+            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth expansion */
+        }
+        .nav-link-sleek:hover {
+            color: #1D4ED8; /* Darker blue on hover */
+        }
+        .nav-link-sleek:hover::after {
+            width: 100%;
+        }
+
+        /* Section Backgrounds/Cards - Consistent with index.html */
+        .card-background-sleek {
+            background-color: #FFFFFF; /* Pure white background for sections */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08); /* Soft but noticeable shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #E2E8F0; /* Light gray border */
+        }
+        /* No hover effect on the main booking form section itself, but could be added */
+
+        /* Form Container Specific Styling - Adapting the sleek card style */
+        .form-container-sleek {
+            background-color: #F0F4F8; /* Light blue-gray for the inner form background */
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            border: 1px solid #E2E8F0;
+        }
+
+        /* Input/Select fields - Sleek and modern */
+        .input-field-sleek {
+            background-color: #FFFFFF; /* White background for inputs */
+            border: 1px solid #CBD5E1; /* Light gray border */
+            color: #1E293B; /* Dark text for input values */
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded corners for inputs */
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-field-sleek:focus {
+            outline: none;
+            border-color: #3B82F6; /* Bright blue focus border */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* Subtle blue glow on focus */
+        }
+        .input-field-sleek option {
+            background-color: #FFFFFF; /* White options in dropdown */
+            color: #1E293B;
+        }
+
+        /* Submit Button - Consistent with index.html primary button */
+        .btn-submit-sleek {
+            background: linear-gradient(90deg, #1D4ED8, #3B82F6); /* Strong blue gradient */
+            color: white;
+            padding: 1.25rem 3.5rem; /* Generous padding */
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 700; /* Bolder text */
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.4); /* Blue shadow */
+            letter-spacing: 0.08em; /* Slightly wider spacing */
+            text-transform: uppercase;
+        }
+        .btn-submit-sleek:hover {
+            transform: translateY(-5px) scale(1.03); /* More pronounced lift and slight scale */
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.6); /* Deeper blue shadow on hover */
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Reverse gradient on hover */
+        }
+
+        /* Section Heading - Consistent with index.html */
+        .section-heading-sleek {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            display: inline-block; /* Allows text-align center on parent and width based on content */
+            font-size: 3rem; /* Larger heading */
+            letter-spacing: 0.03em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.02);
+            color: #1A202C; /* Dark charcoal for heading text */
+        }
+        .section-heading-sleek::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Blue gradient underline */
+            border-radius: 2px;
+        }
+
+        /* Custom Message Box - Adapted for sleek design */
         .message-box-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.85); /* Slightly darker overlay */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Smoother transition */
         }
         .message-box-overlay.show {
             opacity: 1;
             visibility: visible;
         }
         .message-box-content {
-            background-color: #1E293B; /* Dark blue-gray */
-            padding: 3rem 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            background-color: #FFFFFF; /* White background for modal */
+            padding: 3.5rem 3rem; /* More padding */
+            border-radius: 1.5rem; /* Larger border-radius */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45); /* Deeper shadow */
             text-align: center;
             max-width: 90%;
-            width: 450px;
-            transform: translateY(-30px);
-            transition: transform 0.4s ease;
-            border: 1px solid #334155;
-            color: #E2E8F0;
+            width: 500px; /* Slightly wider modal */
+            transform: translateY(-40px); /* More pronounced initial translateY */
+            transition: transform 0.5s ease-out; /* Smoother transform */
+            border: 2px solid #3B82F6; /* Bright blue border */
+            color: #1E293B; /* Dark text */
         }
         .message-box-overlay.show .message-box-content {
             transform: translateY(0);
         }
         .message-box-content h3 {
-            color: #60A5FA; /* Air Europa blue for title */
+            color: #1D4ED8; /* Darker blue for title */
             margin-bottom: 1rem;
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 800;
         }
         .message-box-content p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #4A5568; /* Slate-700 for message text */
         }
         .message-box-content button {
-            background-color: #EF4444; /* Red-500 for close button */
+            background: linear-gradient(90deg, #EF4444, #DC2626); /* Red gradient for close */
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 0.6rem;
+            padding: 1rem 3rem;
+            border-radius: 9999px; /* Pill shape */
             font-weight: 700;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         .message-box-content button:hover {
-            background-color: #DC2626; /* Darker red on hover */
+            background: linear-gradient(90deg, #DC2626, #EF4444); /* Reverse gradient on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6);
         }
+
+        /* General container and section padding adjustments */
+        .container-sleek {
+            max-width: 1300px; /* Consistent with main page's container width */
+        }
+        .py-section-sleek {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+        .mb-content-sleek {
+            margin-bottom: 6rem;
+        }
+
+        /* Footer - Consistent with index.html */
+        .footer-sleek {
+            background-color: #0F172A; /* Darkest blue-gray for the footer */
+            color: #CBD5E1; /* Light text for footer */
+            border-top: 1px solid #1E293B; /* Subtle border */
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+        }
+        .footer-logo {
+            filter: brightness(1.2); /* Make the logo stand out a bit more on dark background */
+        }
+
     </style>
 </head>
-<body class="bg-slate-900 text-slate-200">
+<body class="bg-slate-50 text-slate-700">
 
-    <!-- Header (simplified for this form, adjust as needed for full site) -->
-    <header class="bg-blue-800 text-white shadow-xl py-4 px-6 md:px-12 rounded-b-3xl">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+    <header class="header-sleek py-4 px-6 md:px-12">
+        <div class="container container-sleek mx-auto flex flex-col md:flex-row items-center justify-between">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-600">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-shadow-lg">Air Europa <span class="text-yellow-300">Virtual</span></h1>
+                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-300 footer-logo">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-gray-900">Air Europa <span class="text-blue-600">Virtual</span></h1>
             </div>
             <nav class="flex-grow flex justify-center md:justify-end">
                 <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
-                    <li><a href="index.html" class="hover:text-yellow-300 transition duration-300 text-lg font-medium py-2 px-3 rounded-md hover:bg-blue-700">Home</a></li>
-                
-                </ul>
+                    <li><a href="index.html" class="nav-link-sleek text-lg">Home</a></li>
+                    </ul>
             </nav>
         </div>
     </header>
 
-    <main class="container mx-auto py-16 px-6 md:px-12">
-        <section id="booking-form-section" class="bg-slate-800 p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-slate-700 relative overflow-hidden">
-            <h2 class="text-4xl font-bold text-yellow-300 mb-10 text-center border-b-2 border-blue-600 pb-2 inline-block mx-auto">Book Your Virtual Flight</h2>
-            <p class="text-center text-lg mb-10 max-w-2xl mx-auto text-slate-300">
+    <main class="container container-sleek mx-auto py-section-sleek px-6 md:px-12">
+        <section id="booking-form-section" class="card-background-sleek p-8 md:p-12 mb-content-sleek relative overflow-hidden">
+            <h2 class="section-heading-sleek text-center mx-auto mb-10">Book Your Virtual Flight</h2>
+            <p class="text-center text-lg mb-10 max-w-2xl mx-auto text-slate-500">
                 Plan your next virtual journey with Air Europa Virtual. Select your departure, arrival, and flight details below.
             </p>
 
-            <div class="max-w-xl mx-auto bg-slate-700 p-8 rounded-lg shadow-xl border-t-4 border-yellow-300">
-                <!-- Formspree endpoint for submission -->
+            <div class="max-w-xl mx-auto form-container-sleek">
                 <form id="flightBookingForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
-                    <!-- Hidden fields for email recipients and subject -->
                     <input type="hidden" name="_recipients" value="ryanyagouni@gmail.com,pfaevroblox@gmail.com">
                     <input type="hidden" name="_subject" value="New AEV Flight Booking Request">
                     <input type="hidden" name="Discord Username" id="discordUsernameHidden">
-                    <!-- Optional: if you had the 'email' scope for Discord login, you could use this for _replyto -->
-                    <!-- <input type="hidden" name="_replyto" id="discordEmailHidden"> -->
-
                     <div>
-                        <label for="origin" class="block text-slate-200 text-sm font-bold mb-2">Departure Airport:</label>
-                        <select id="origin" name="Departure Airport" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                        <label for="origin" class="block text-slate-700 text-sm font-semibold mb-2">Departure Airport:</label>
+                        <select id="origin" name="Departure Airport" class="input-field-sleek" required>
                             <option value="">Select Departure Airport</option>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
+                            </select>
                     </div>
 
                     <div>
-                        <label for="destination" class="block text-slate-200 text-sm font-bold mb-2">Arrival Airport:</label>
-                        <select id="destination" name="Arrival Airport" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                        <label for="destination" class="block text-slate-700 text-sm font-semibold mb-2">Arrival Airport:</label>
+                        <select id="destination" name="Arrival Airport" class="input-field-sleek" required>
                             <option value="">Select Arrival Airport</option>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
+                            </select>
                     </div>
 
                     <div>
-                        <label for="flight-date" class="block text-slate-200 text-sm font-bold mb-2">Departure Date:</label>
-                        <input type="date" id="flight-date" name="Departure Date" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                        <label for="flight-date" class="block text-slate-700 text-sm font-semibold mb-2">Departure Date:</label>
+                        <input type="date" id="flight-date" name="Departure Date" class="input-field-sleek" required>
                     </div>
 
                     <div>
-                        <label for="passengers" class="block text-slate-200 text-sm font-bold mb-2">Number of Passengers:</label>
-                        <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="shadow appearance-none border border-slate-600 rounded-lg w-full py-3 px-4 bg-slate-900 text-slate-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" required>
+                        <label for="passengers" class="block text-slate-700 text-sm font-semibold mb-2">Number of Passengers:</label>
+                        <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="input-field-sleek" required>
                     </div>
 
                     <div class="flex justify-center pt-4">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                        <button type="submit" class="btn-submit-sleek">
                             Submit Booking
                         </button>
                     </div>
@@ -169,7 +308,6 @@
         </section>
     </main>
 
-    <!-- Custom Message Box Overlay -->
     <div id="messageBoxOverlay" class="message-box-overlay">
         <div class="message-box-content">
             <h3 id="messageBoxTitle" class="text-2xl font-bold"></h3>
@@ -178,9 +316,8 @@
         </div>
     </div>
 
-    <!-- Footer (simplified for this form, adjust as needed for full site) -->
-    <footer class="bg-slate-950 text-slate-300 py-8 px-6 md:px-12 mt-16 rounded-t-3xl shadow-inner border-t border-slate-800">
-        <div class="container mx-auto text-center">
+    <footer class="footer-sleek py-8 px-6 md:px-12 mt-16">
+        <div class="container container-sleek mx-auto text-center">
             <p class="text-lg mb-4">&copy; 2024 Air Europa Virtual. All rights reserved.</p>
             <p class="text-sm opacity-80 mb-6">
                 This site is a virtual simulation and is not affiliated with Air Europa or any other real entity.
@@ -290,6 +427,7 @@
                     } else {
                         const data = await response.json();
                         if (data.errors) {
+                            // Formspree often returns errors if something is misconfigured but still records the submission
                             showMessageBox("Your flight booking has been recorded", `Please open a ticket in our server, With the same exact information please.`);
                         } else {
                             showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
