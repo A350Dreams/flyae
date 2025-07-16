@@ -3,525 +3,532 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Air Europa Virtual (AEV) - Fly Europe</title>
+    <title>Air Europa Virtual (AEV) - Professional Aviation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="ae.png" type="image/png" />
     <style>
-        /* Custom CSS for the NEW DESIGN */
+        /* CUSTOM CSS FOR THE PROFESSIONAL & BEAUTIFUL DESIGN */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            background-color: #F8FAFC; /* Lightest slate (white-ish) */
+            background-color: #F0F4F8; /* Very light blue-gray */
             color: #334155; /* Slate-700 for main text */
         }
         h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Merriweather', serif; /* Elegant serif font for headings */
             font-weight: 700;
-            color: #1E293B; /* Slate-900 for headings */
+            color: #1A202C; /* Darker charcoal for strong contrast */
         }
+        h1 { font-weight: 900; } /* Extra bold for main title */
+        h2 { font-weight: 700; }
+        h3 { font-weight: 700; }
 
-        /* Custom scrollbar - adapted for a lighter theme */
+        /* Custom scrollbar - refined for elegance */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #E2E8F0; /* Light track */
+            background: #E2E8F0; /* Lighter track */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #94A3B8; /* Medium gray thumb */
+            background: #94A3B8; /* Muted gray thumb */
             border-radius: 10px;
+            border: 2px solid #F0F4F8; /* Matches body background for subtle depth */
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #64748B; /* Darker on hover */
             cursor: pointer;
         }
 
-        /* Hero section background with subtle cloud texture */
-        .hero-background {
-            background: linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%); /* Light blue gradient */
+        /* Hero section background with sophisticated gradient and subtle pattern */
+        .hero-background-pro {
+            background: linear-gradient(145deg, #1A365D 0%, #2B6CB0 100%); /* Deep blue gradient */
             position: relative;
             overflow: hidden;
+            border-bottom: 8px solid #F6AD55; /* Muted gold border */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
-        .hero-background::before {
+        .hero-background-pro::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Subtle cloud-like pattern - adjust opacity for effect */
-            background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23a0aec0\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M9.843 3.429L8.331 4.542 9 6.286l2-2h-1.557l-.37-1.143zM5.314 90.171L6.726 91.2 5.571 93l-1.557-2H2.857l-.37-1.143zM49.843 3.429L48.331 4.542 49 6.286l2-2h-1.557l-.37-1.143zM45.314 90.171L46.726 91.2 45.571 93l-1.557-2H42.857l-.37-1.143zM89.843 3.429L88.331 4.542 89 6.286l2-2h-1.557l-.37-1.143zM85.314 90.171L86.726 91.2 85.571 93l-1.557-2H82.857l-.37-1.143z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
-            opacity: 0.2; /* Adjust opacity for desired effect */
+            /* Subtle geometric/abstract pattern */
+            background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg opacity=\'0.08\'%3E%3Cpath fill=\'%23F7FAFC\' d=\'M0 0h10v10H0V0zm20 0h10v10H20V0zm20 0h10v10H40V0zm20 0h10v10H60V0zm20 0h10v10H80V0zm0 20h10v10H80V20zm0 20h10v10H80V40zm0 20h10v10H80V60zm0 20h10v10H80V80zM60 80h10v10H60V80zm-20 0h10v10H40V80zm-20 0h10v10H20V80zm-20 0h10v10H0V80zm0-20h10v10H0V60zm0-20h10v10H0V40zm0-20h10v10H0V20zM20 20h10v10H20V20zm20 20h10v10H40V40zm20 20h10v10H60V60zm20 20h10v10H80V80z\'/%3E%3C/g%3E%3C/svg%3E');
+            opacity: 0.1; /* Adjust opacity for desired effect */
             z-index: 0;
         }
-        .hero-background > div {
+        .hero-background-pro > div {
             position: relative;
             z-index: 1;
         }
 
-        /* Card background with subtle texture */
-        .card-background {
+        /* Card background with very subtle pattern */
+        .card-background-pro {
             background-color: #FFFFFF; /* White */
             position: relative;
             overflow: hidden;
+            border-radius: 1rem; /* Consistent radius */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Softer, wider shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #E2E8F0; /* Subtle light border */
         }
-        .card-background::before {
+        .card-background-pro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .card-background-pro::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23e2e8f0\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M9.843 3.429L8.331 4.542 9 6.286l2-2h-1.557l-.37-1.143zM5.314 90.171L6.726 91.2 5.571 93l-1.557-2H2.857l-.37-1.143zM49.843 3.429L48.331 4.542 49 6.286l2-2h-1.557l-.37-1.143zM45.314 90.171L46.726 91.2 45.571 93l-1.557-2H42.857l-.37-1.143zM89.843 3.429L88.331 4.542 89 6.286l2-2h-1.557l-.37-1.143zM85.314 90.171L86.726 91.2 85.571 93l-1.557-2H82.857l-.37-1.143z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); /* Lighter pattern */
-            opacity: 0.1;
+            background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23F0F4F8\' fill-opacity=\'0.8\'%3E%3Cpath d=\'M36 34.545V44h-2V34.545H24.81L28 28.536l-1.414-1.414L23.586 28 20 24.414 16.414 28 15 26.586 18.586 23 15 19.414 16.414 18 20 21.586l3.586-3.586L26.586 18l-3.001 3.001 1.414 1.414zM24 33.172l-4-4-4 4-4-4-4 4V24h16V33.172zM56 34.545V44h-2V34.545H44.81L48 28.536l-1.414-1.414L43.586 28 40 24.414 36.414 28 35 26.586 38.586 23 35 19.414 36.414 18 40 21.586l3.586-3.586L46.586 18l-3.001 3.001 1.414 1.414zM44 33.172l-4-4-4 4-4-4-4 4V24h16V33.172zM16 4.545V14h-2V4.545H4.81L8 8.536l-1.414-1.414L3.586 8 0 4.414 16.414 8 15 6.586 18.586 3 15 .414 16.414 0 20 3.586l3.586-3.586L26.586 0l-3.001 3.001 1.414 1.414zM4 3.172l-4-4-4 4-4-4-4 4V-6h16V3.172zM56 4.545V14h-2V4.545H44.81L48 8.536l-1.414-1.414L43.586 8 40 4.414 36.414 8 35 6.586 38.586 3 35 .414 36.414 0 40 3.586l3.586-3.586L46.586 0l-3.001 3.001 1.414 1.414zM44 3.172l-4-4-4 4-4-4-4 4V-6h16V3.172z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            background-size: 30px; /* Make pattern smaller/subtler */
+            opacity: 0.05; /* Very subtle */
             z-index: 0;
         }
-        .card-background > * { /* Ensure content is above the pseudo-element */
+        .card-background-pro > * {
             position: relative;
             z-index: 1;
         }
 
-
-        /* Navigation link hover effect */
-        .nav-link-underline::after {
+        /* Header and Nav */
+        .header-pro {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .nav-link-pro {
+            position: relative;
+            font-weight: 500;
+            color: #4A5568; /* Gray-700 */
+            transition: color 0.3s ease;
+        }
+        .nav-link-pro::after {
             content: '';
             position: absolute;
-            bottom: -4px; /* Adjust as needed */
-            left: 0;
+            bottom: -8px; /* More space below link */
+            left: 50%; /* Start from center */
+            transform: translateX(-50%); /* Center the line */
             width: 0%;
-            height: 2px;
-            background-color: #2563EB; /* A more vibrant blue */
-            transition: width 0.3s ease-out;
+            height: 3px; /* Slightly thicker underline */
+            background-color: #F6AD55; /* Muted gold */
+            border-radius: 2px;
+            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
         }
-        .nav-link-underline:hover::after {
+        .nav-link-pro:hover {
+            color: #2D3748; /* Darker gray on hover */
+        }
+        .nav-link-pro:hover::after {
             width: 100%;
         }
 
-        /* Button Styles */
-        .btn-primary-new {
-            background: linear-gradient(90deg, #2563EB, #3B82F6); /* Blue gradient */
+        /* Professional Buttons */
+        .btn-primary-pro {
+            background: linear-gradient(90deg, #3182CE, #4299E1); /* Professional blue gradient */
             color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 9999px; /* Pill shape */
+            padding: 1.2rem 3rem; /* Larger padding */
+            border-radius: 9999px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3); /* Blue shadow */
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.4); /* Deeper blue shadow */
+            letter-spacing: 0.05em; /* Slightly spaced letters */
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            text-transform: uppercase;
         }
-        .btn-primary-new:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 20px rgba(37, 99, 235, 0.45);
+        .btn-primary-pro:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(49, 130, 206, 0.6);
+            background: linear-gradient(90deg, #4299E1, #3182CE); /* Reverse gradient on hover */
         }
 
-        .btn-secondary-new {
-            background-color: #FACC15; /* Yellow-400 */
-            color: #1E293B; /* Dark text */
-            padding: 0.8rem 2rem;
+        .btn-secondary-pro {
+            background-color: #F6AD55; /* Muted gold */
+            color: #1A202C; /* Dark text for contrast */
+            padding: 1rem 2.8rem;
             border-radius: 0.75rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(246, 173, 85, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
-        .btn-secondary-new:hover {
-            background-color: #EAB308; /* Yellow-500 */
+        .btn-secondary-pro:hover {
+            background-color: #ED8936; /* Darker gold */
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 16px rgba(246, 173, 85, 0.4);
         }
 
-        /* User Info in Header - adjusted for lighter theme */
-        .user-info {
+        /* User Info in Header - polished look */
+        .user-info-pro {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            background-color: #E2E8F0; /* Lighter background */
-            padding: 0.4rem 1rem;
+            gap: 0.85rem;
+            background-color: #F7FAFC; /* Lighter background */
+            padding: 0.6rem 1.2rem;
             border-radius: 9999px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E2E8F0;
         }
-        .user-info img {
-            width: 40px;
-            height: 40px;
+        .user-info-pro img {
+            width: 48px; /* Larger avatar */
+            height: 48px;
             border-radius: 50%;
-            border: 2px solid #3B82F6; /* Brighter blue border */
+            border: 3px solid #3182CE; /* Stronger blue border */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         }
-        .user-info span {
+        .user-info-pro span {
             font-weight: 600;
-            color: #475569; /* Slate-600 */
+            color: #2D3748; /* Darker gray */
+            font-size: 1.05rem;
         }
-        .logout-button {
-            background-color: #EF4444; /* Red-500 */
+        .logout-button-pro {
+            background-color: #E53E3E; /* Red-600 */
             color: white;
-            padding: 0.4rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 9999px;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             cursor: pointer;
             border: none;
-            margin-left: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-left: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         }
-        .logout-button:hover {
-            background-color: #DC2626; /* Red-600 */
+        .logout-button-pro:hover {
+            background-color: #C53030; /* Red-700 */
+            transform: translateY(-1px);
         }
 
-        /* Loading Screen - adjusted for lighter theme */
+        /* Loading Screen - professional and smooth */
         #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #BFDBFE, #93C5FD); /* Match hero */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease-out, visibility 1s ease-out;
-        }
-        #loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            background: linear-gradient(135deg, #1A365D, #2B6CB0); /* Matches hero */
+            transition: opacity 1.2s ease-out, visibility 1.2s ease-out;
         }
         .loading-logo {
-            width: 180px;
-            height: 180px;
-            margin-bottom: 2.5rem;
-            animation: fadeInScale 1.2s ease-out;
+            width: 200px; /* Larger logo */
+            height: 200px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); /* Soft glow */
         }
         .loading-spinner {
-            border: 8px solid rgba(255, 255, 255, 0.3); /* Lighter border */
-            border-top: 8px solid #2563EB; /* Primary blue */
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            animation: spin 1.2s linear infinite, fadeIn 1s ease-in;
-            margin-bottom: 2rem;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-top: 8px solid #F6AD55; /* Gold spinner */
+            width: 80px;
+            height: 80px;
+            animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite, fadeIn 1s ease-in; /* Bouncier spin */
         }
         .loading-text {
-            color: #1E293B; /* Darker text for contrast */
-            font-size: 1.8rem;
+            color: #F7FAFC; /* Off-white text */
+            font-size: 2.2rem; /* Larger text */
             font-weight: 700;
-            letter-spacing: 0.08em;
-            animation: fadeIn 1s ease-in;
-        }
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            letter-spacing: 0.1em; /* More spacing */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.2s ease-in;
         }
 
-        /* Custom login modal - adapted for lighter theme */
+        /* Custom login modal - polished */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Slightly less opaque */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            background-color: rgba(26, 32, 44, 0.8); /* Darker, more prominent overlay */
         }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
+        .modal-content-pro {
+            background-color: #FFFFFF;
+            padding: 3.5rem 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            border: 1px solid #CBD5E1;
+            color: #2D3748; /* Darker text */
+            max-width: 500px; /* Slightly wider */
         }
-        .modal-content {
-            background-color: #FFFFFF; /* White background */
-            padding: 3rem 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 90%;
-            width: 450px;
-            transform: translateY(-30px);
-            transition: transform 0.4s ease;
-            border: 1px solid #CBD5E1; /* Light gray border */
-            color: #334155; /* Dark text */
-        }
-        .modal-overlay.show .modal-content {
-            transform: translateY(0);
-        }
-        .discord-login-btn {
+        .discord-login-btn-pro {
             background-color: #5865F2; /* Discord blue */
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 0.6rem;
+            padding: 1rem 2.5rem; /* Larger button */
+            border-radius: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            pointer-events: none; /* Disabled by default */
-            opacity: 0.5; /* Visually indicate disabled state */
+            letter-spacing: 0.08em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
         }
-        .discord-login-btn.enabled {
-            pointer-events: auto; /* Re-enable when 'read' is typed */
-            opacity: 1;
-        }
-        .discord-login-btn:hover.enabled {
+        .discord-login-btn-pro:hover.enabled {
             background-color: #4752C4;
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
         }
 
-        /* Creator Alert specific to modal - adjusted for lighter theme */
+        /* Creator Alert specific to modal - professional and subtle */
         .modal-creator-alert {
-            background-color: rgba(59, 130, 246, 0.1); /* Semi-transparent blue */
-            border-left: 4px solid #3B82F6; /* Primary blue */
-            padding: 1rem;
-            margin-top: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 0.95rem;
-            text-align: left;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            color: #475569; /* Slate-600 */
-        }
-        .modal-creator-alert.show {
-            opacity: 1;
-            transform: translateY(0);
+            background-color: rgba(49, 130, 206, 0.08); /* Very light blue tint */
+            border-left: 4px solid #3182CE; /* Deeper blue border */
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0.6rem;
+            font-size: 1rem;
+            color: #4A5568; /* Gray-700 */
         }
         .modal-creator-alert strong {
-            color: #2563EB; /* Darker blue for emphasis */
+            color: #2D3748; /* Darker emphasis */
         }
         .modal-creator-alert input[type="text"] {
-            background-color: #F8FAFC; /* Lighter input background */
+            background-color: #F8FAFC;
             border: 1px solid #CBD5E1;
-            color: #1E293B; /* Dark input text */
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            width: 100%;
-            margin-top: 0.5rem;
-            text-align: center;
-            font-size: 1.1rem;
+            color: #1A202C;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
         }
         .modal-creator-alert input[type="text"]:focus {
-            outline: none;
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+            border-color: #3182CE;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
         }
 
-        /* Social Icons in Footer */
-        .social-icon {
-            width: 32px;
-            height: 32px;
-            transition: transform 0.2s ease, filter 0.2s ease;
-            filter: grayscale(100%); /* Desaturate for cleaner look */
-            opacity: 0.7;
+        /* Social Icons in Footer - professional touch */
+        .social-icon-pro {
+            width: 36px; /* Slightly larger */
+            height: 36px;
+            transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+            filter: grayscale(80%); /* More subtle desaturation */
+            opacity: 0.8;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            border-radius: 50%; /* Make them round */
         }
-        .social-icon:hover {
-            transform: translateY(-3px);
-            filter: grayscale(0%); /* Full color on hover */
+        .social-icon-pro:hover {
+            transform: translateY(-4px);
+            filter: grayscale(0%);
             opacity: 1;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        /* Section Headings - more pronounced style */
+        .section-heading-pro {
+            border-bottom: 3px solid #F6AD55; /* Gold underline */
+            padding-bottom: 0.75rem;
+            margin-bottom: 2.5rem;
+            display: inline-block; /* To make border-bottom fit text */
+            font-size: 2.8rem; /* Larger heading */
+            letter-spacing: 0.02em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Image styling within content sections */
+        .content-image-pro {
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow for depth */
+            border: 3px solid #3182CE; /* Professional blue border */
+        }
+
+        /* General spacing and container adjustments */
+        .container-pro {
+            max-width: 1200px; /* Slightly wider max-width for content */
+        }
+        .py-section-pro {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        /* Add a subtle animation to the hero text */
+        @keyframes slideInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 1s ease-out forwards;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-slate-700">
+<body class="bg-blue-50 text-slate-700">
 
-    <div id="loading-screen">
-        <img src="ae.png" alt="Air Europa Virtual Logo" class="loading-logo">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Preparing for Takeoff...</div>
+    <div id="loading-screen" class="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-50">
+        <img src="ae.png" alt="Air Europa Virtual Logo" class="loading-logo mb-8">
+        <div class="loading-spinner mb-6"></div>
+        <div class="loading-text">Preparing for an Elite Flight...</div>
     </div>
 
-    <header class="bg-white shadow-lg py-4 px-6 md:px-12 rounded-b-2xl">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-            <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-md border-2 border-blue-400">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-blue-800">Air Europa <span class="text-yellow-500">Virtual</span></h1>
+    <header class="header-pro py-5 px-6 md:px-16 rounded-b-3xl">
+        <div class="container-pro mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-5 mb-5 md:mb-0">
+                <img src="ae.png" alt="AEV Logo" class="h-20 w-20 rounded-full shadow-lg border-3 border-blue-500">
+                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-blue-900">Air Europa <span class="text-amber-500">Virtual</span></h1>
             </div>
             <nav class="flex-grow flex justify-center md:justify-end">
-                <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
-                    <li><a href="index.html" class="relative text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 nav-link-underline">Home</a></li>
-                    <li><a href="#about" class="relative text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 nav-link-underline">About</a></li>
-                    <li><a href="#features" class="relative text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 nav-link-underline">Features</a></li>
-                    <li><a href="flightbooking.html" class="relative text-lg font-medium text-gray-700 hover:text-blue-600 transition duration-300 nav-link-underline">Book Your Flight</a></li>
+                <ul class="flex flex-wrap justify-center md:space-x-10 space-x-6">
+                    <li><a href="index.html" class="nav-link-pro text-lg">Home</a></li>
+                    <li><a href="#about" class="nav-link-pro text-lg">About Us</a></li>
+                    <li><a href="#features" class="nav-link-pro text-lg">Our Vision</a></li>
+                    <li><a href="flightbooking.html" class="nav-link-pro text-lg">Flight Operations</a></li>
                 </ul>
             </nav>
-            <div class="user-actions mt-4 md:mt-0 md:ml-8 flex items-center">
-            </div>
+            <div class="user-actions mt-5 md:mt-0 md:ml-10 flex items-center">
+                </div>
         </div>
     </header>
 
-    <section id="home" class="hero-background text-gray-900 py-28 md:py-40 flex items-center justify-center rounded-b-3xl shadow-xl">
-        <div class="container mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight text-white drop-shadow-lg">Soar to New Heights with AEV.</h2>
-            <p class="text-xl md:text-2xl mb-12 max-w-4xl mx-auto opacity-95 text-white font-light">
-                Discover the most authentic virtual aviation experience mirroring Air Europa's real-world operations. Join our vibrant community, explore diverse routes, and command a modern fleet.
+    <section id="home" class="hero-background-pro text-white py-32 md:py-48 flex items-center justify-center rounded-b-4xl">
+        <div class="container-pro mx-auto text-center relative z-10">
+            <h2 class="text-6xl md:text-8xl font-bold mb-8 leading-tight animate-slide-in-up text-shadow-lg">
+                Experience Professional Virtual Aviation.
+            </h2>
+            <p class="text-xl md:text-2xl mb-14 max-w-5xl mx-auto opacity-90 font-light animate-slide-in-up delay-200">
+                Elevate your flight simulation journey with Air Europa Virtual. We meticulously replicate real-world operations, offering a sophisticated and immersive environment for pilots who demand excellence.
             </p>
-            <a href="#join" class="btn-primary-new text-2xl animate-bounce">
-                Embark on Your Flight
+            <a href="#join" class="btn-primary-pro text-2xl animate-bounce-subtle">
+                Begin Your Elite Journey
             </a>
         </div>
     </section>
 
-    <main class="container mx-auto py-16 px-6 md:px-12">
+    <main class="container-pro mx-auto py-section-pro px-6 md:px-12">
 
-        <section id="about" class="card-background p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-gray-200">
-            <div class="flex flex-col md:flex-row items-center md:space-x-12">
-                <div class="md:w-1/2 mb-8 md:mb-0 transform hover:scale-102 transition-transform duration-300">
-                    <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="rounded-xl shadow-lg w-full h-auto border-2 border-blue-300">
+        <section id="about" class="card-background-pro p-10 md:p-16 mb-24">
+            <div class="flex flex-col md:flex-row items-center md:space-x-16">
+                <div class="md:w-1/2 mb-10 md:mb-0 transform hover:scale-102 transition-transform duration-500">
+                    <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="content-image-pro w-full h-auto">
                 </div>
                 <div class="md:w-1/2 text-gray-700">
-                    <h3 class="text-4xl font-bold text-blue-700 mb-6 border-b-2 border-blue-300 pb-2 inline-block">About Air Europa Virtual</h3>
-                    <p class="text-lg leading-relaxed mb-4">
-                        Air Europa Virtual (AEV) is a thriving community dedicated to the art of flight simulation, mirroring the real-world operations of Air Europa. Our mission is to provide an immersive and authentic experience for virtual pilots worldwide.
+                    <h3 class="section-heading-pro text-blue-800 mb-8">About Air Europa Virtual</h3>
+                    <p class="text-lg leading-relaxed mb-6">
+                        Air Europa Virtual (AEV) is not just a community; it's a commitment to realistic flight simulation. We provide a platform for virtual pilots to engage with the intricate details of aviation, from flight planning to procedural execution, all inspired by Air Europa's operational standards.
                     </p>
-                    <p class="text-lg leading-relaxed mb-4">
-                        We welcome pilots of all skill levels to our friendly and supportive environment. Whether you're mastering short-haul European routes or embarking on challenging intercontinental journeys, AEV offers a dynamic platform to enhance your virtual aviation passion.
+                    <p class="text-lg leading-relaxed mb-6">
+                        Our dedication to realism is matched by our supportive environment. AEV fosters a community where pilots of all experience levels can refine their skills, share their passion, and embark on challenging flights within a meticulously structured virtual airline framework.
                     </p>
-                    <p class="text-lg leading-relaxed">
-                        Join us to engage in realistic flight planning, participate in exciting community events, and contribute to a vibrant virtual airline, all without any membership fees.
+                    <p class="text-lg leading-relaxed font-semibold">
+                        Discover a world where your virtual flights truly matter, contribute to a professional virtual airline, and never pay a fee to join this exceptional experience.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="discord" class="card-background p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-gray-200">
-            <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-12">
-                <div class="md:w-1/2 mb-8 md:mb-0 transform hover:scale-102 transition-transform duration-300">
-                    <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="rounded-xl shadow-lg w-full h-auto border-2 border-indigo-300">
+        <section id="discord" class="card-background-pro p-10 md:p-16 mb-24">
+            <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-16">
+                <div class="md:w-1/2 mb-10 md:mb-0 transform hover:scale-102 transition-transform duration-500">
+                    <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="content-image-pro w-full h-auto border-blue-400">
                 </div>
                 <div class="md:w-1/2 text-gray-700">
-                    <h3 class="text-4xl font-bold text-blue-700 mb-6 border-b-2 border-blue-300 pb-2 inline-block">Connect on Discord</h3>
-                    <p class="text-lg leading-relaxed mb-4">
-                        Our Discord server is the pulsing heart of the AEV community. It's the go-to place for pilots to connect, share insights, seek support, and participate in all our virtual airline activities.
+                    <h3 class="section-heading-pro text-blue-800 mb-8">Our Exclusive Discord Community</h3>
+                    <p class="text-lg leading-relaxed mb-6">
+                        The AEV Discord server is the nexus of our professional community. It's an active hub where pilots collaborate, share advanced techniques, and receive real-time support. This is where your virtual aviation journey truly takes flight.
                     </p>
-                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-2 mb-6 ml-4">
-                        <li><strong>Live Chat:</strong> Engage with fellow pilots in real-time.</li>
-                        <li><strong>Flight Resources:</strong> Access charts, guides, and planning tools.</li>
-                        <li><strong>Events & Activities:</strong> Join group flights, challenges, and training.</li>
-                        <li><strong>Dedicated Support:</strong> Get help with your simulator setup and AEV systems.</li>
-                        <li><strong>Showcase:</strong> Share your best flight screenshots and videos!</li>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-3 mb-8 pl-4">
+                        <li><strong>Expert Support:</strong> Direct access to experienced staff and fellow pilots for simulator configuration, flight planning, and procedural guidance.</li>
+                        <li><strong>Dynamic Events:</strong> Participate in meticulously planned group flights, realistic online ATC sessions, and engaging challenges designed to test and improve your skills.</li>
+                        <li><strong>Knowledge Base:</strong> Access a curated library of resources, including SIDs/STARs, real-world operational procedures, and exclusive training materials.</li>
+                        <li><strong>Career Progression:</strong> Discuss and track your virtual pilot career, exchange tips on maximizing realism, and share your achievements.</li>
+                        <li><strong>Networking:</strong> Connect with a global network of dedicated flight simulation enthusiasts.</li>
                     </ul>
                     <p class="text-lg leading-relaxed font-semibold">
-                        Become a part of our thriving virtual aviation family on Discord today!
+                        Join our vibrant and highly professional Discord community to elevate your flight simulation experience.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="features" class="card-background p-8 md:p-12 rounded-2xl shadow-xl mb-16 border border-gray-200">
-            <h3 class="text-4xl font-bold text-blue-700 mb-10 text-center border-b-2 border-blue-300 pb-2 inline-block mx-auto">Why Choose Air Europa Virtual?</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">🆓</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">No Membership Fees</h4>
-                    <p class="text-gray-700">
-                        Experience the full virtual airline without any cost. Your passion is the only requirement.
+        <section id="features" class="card-background-pro p-10 md:p-16 mb-24 text-center">
+            <h3 class="section-heading-pro text-blue-800 mx-auto">Why Choose AEV for Professionalism?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">✈️</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Unparalleled Realism</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        We meticulously emulate Air Europa's operational procedures, fleet, and global route network for an authentic experience.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">🌍</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">Diverse Route Network</h4>
-                    <p class="text-gray-700">
-                        Explore Air Europa's extensive real-world routes across continents.
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">📈</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Dedicated Career Progression</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        Track your pilot hours, advance through ranks, and unlock new aircraft and routes within our robust system.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">✈️</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">Authentic Flight Experience</h4>
-                    <p class="text-gray-700">
-                        Simulate flights with procedures and immersion inspired by real Air Europa operations.
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">🎓</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Comprehensive Training Resources</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        Access guides, tutorials, and support to master complex aircraft and advanced flight procedures.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">🤝</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">Vibrant & Welcoming Community</h4>
-                    <p class="text-gray-700">
-                        Connect with friendly pilots, share knowledge, and fly together.
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">🌐</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Global Community & Events</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        Engage with a diverse, international community of serious simmers through regular, high-quality events.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">🗓️</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">Regular Events & Challenges</h4>
-                    <p class="text-gray-700">
-                        Participate in group flights, fly-ins, and engaging challenges to test your skills.
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">🛡️</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Robust & Stable Infrastructure</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        Benefit from reliable systems, a modern website, and a dedicated staff committed to a smooth experience.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-20 w-20 bg-blue-100 text-blue-600 rounded-full mb-4 text-4xl font-bold">🎮</div>
-                    <h4 class="text-xl font-semibold text-blue-600 mb-3">Simulator Friendly</h4>
-                    <p class="text-gray-700">
-                        Fly on MSFS, X-Plane, P3D, or your preferred simulator – we support them all.
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100 flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center h-24 w-24 bg-blue-100 text-blue-700 rounded-full mb-6 text-5xl font-bold shadow-inner">💸</div>
+                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Zero Membership Cost</h4>
+                    <p class="text-gray-700 leading-relaxed">
+                        Access all features and benefits without any financial commitment. Our passion is shared, not sold.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="join" class="bg-blue-600 text-white p-8 md:p-16 rounded-2xl shadow-2xl text-center border border-blue-500">
-            <h3 class="text-4xl md:text-5xl font-bold mb-6 text-white">Ready to Take Off with AEV?</h3>
-            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto font-light">
-                Your journey into realistic virtual aviation starts here. Click the button below to join our Discord server and become a part of the Air Europa Virtual family.
+        <section id="join" class="bg-blue-800 text-white p-12 md:p-20 rounded-3xl shadow-2xl text-center border-t-8 border-amber-400">
+            <h3 class="text-5xl md:text-6xl font-bold mb-8 text-white drop-shadow-md">Ready to Achieve Virtual Aviation Excellence?</h3>
+            <p class="text-xl md:text-2xl mb-12 max-w-4xl mx-auto font-light leading-relaxed">
+                Your pathway to sophisticated flight simulation begins here. Join our distinguished community and immerse yourself in the world of professional virtual aviation with Air Europa Virtual.
             </p>
             <a href="https://discord.gg/sr4Na4j28B" target="_blank" rel="noopener noreferrer"
-               class="btn-secondary-new text-2xl animate-pulse">
-                Join AEV Discord Now!
+               class="btn-secondary-pro text-2xl animate-pulse">
+                Join AEV Discord Today!
             </a>
-            <p class="text-sm mt-6 opacity-80">
+            <p class="text-sm mt-8 opacity-80">
             </p>
         </section>
 
     </main>
 
-    <footer class="bg-gray-100 text-gray-600 py-8 px-6 md:px-12 mt-16 rounded-t-2xl shadow-inner border-t border-gray-200">
-        <div class="container mx-auto text-center">
-            <p class="text-lg mb-4">&copy; 2025- A350Dreams. All rights reserved.</p>
-            <p class="text-sm opacity-80 mb-6">
-                Made by A350Dreams for Air Europa Líneas Aéreas, S.A.U. Virtual.
+    <footer class="bg-gray-800 text-gray-300 py-10 px-8 md:px-16 mt-20 rounded-t-3xl shadow-inner-lg">
+        <div class="container-pro mx-auto text-center">
+            <p class="text-lg mb-5">&copy; 2025 - A350Dreams. All rights reserved.</p>
+            <p class="text-base opacity-80 mb-8">
+                Crafted with precision by A350Dreams for Air Europa Líneas Aéreas, S.A.U. Virtual.
             </p>
-            <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="social-icon" aria-label="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/256px-YouTube_full-color_icon_%282017%29.svg.png" alt="YouTube"></a>
-                <a href="#" class="social-icon" aria-label="Twitter"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/256px-X_logo_2023.svg.png" alt="Twitter"></a>
-                <a href="#" class="social-icon" aria-label="Instagram"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/256px-Instagram_icon.png" alt="Instagram"></a>
+            <div class="flex justify-center space-x-8 mt-6">
+                <a href="#" class="social-icon-pro" aria-label="YouTube"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/256px-YouTube_full-color_icon_%282017%29.svg.png" alt="YouTube"></a>
+                <a href="#" class="social-icon-pro" aria-label="Twitter"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/256px-X_logo_2023.svg.png" alt="Twitter"></a>
+                <a href="#" class="social-icon-pro" aria-label="Instagram"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/256px-Instagram_icon.png" alt="Instagram"></a>
             </div>
         </div>
     </footer>
 
     <div id="loginModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 class="text-2xl font-bold text-blue-700 mb-4">Login Required</h3>
-            <p class="text-lg text-gray-700 mb-6">
-                Please log in with Discord to access full features and participate in the AEV community.
+        <div class="modal-content-pro">
+            <h3 class="text-3xl font-bold text-blue-800 mb-6">Secure Pilot Login</h3>
+            <p class="text-lg text-gray-700 mb-8">
+                Access your personalized pilot dashboard and community features by securely logging in with Discord.
             </p>
 
             <div id="modalCreatorAlert" class="modal-creator-alert">
-                <p>Website designed and developed by <strong>A350Dreams</strong>!</p>
-                <p class="mt-2 text-sm text-gray-500">To proceed, please type "read" (all lowercase) in the box below:</p>
-                <input type="text" id="readInput" class="mt-2">
+                <p>Website designed and meticulously developed by <strong>A350Dreams</strong>.</p>
+                <p class="mt-3 text-sm text-gray-600">To acknowledge and proceed, please type "read" (all lowercase) in the box below:</p>
+                <input type="text" id="readInput" class="mt-3">
             </div>
 
-            <a id="modalLoginButton" href="#" class="discord-login-btn mt-6">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <a id="modalLoginButton" href="#" class="discord-login-btn-pro mt-8 enabled">
+                <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M10 3.325c-4.045 0-7.325 3.28-7.325 7.325 0 2.227 1.01 4.237 2.613 5.568l-1.928 2.058a.75.75 0 0 0 .506 1.25c.341 0 .677-.113.95-.327l2.846-2.134c1.187.326 2.457.5 3.738.5 4.045 0 7.325-3.28 7.325-7.325C17.325 6.605 14.045 3.325 10 3.325ZM12.75 12a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Zm4-4a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Z" />
                 </svg>
-                Login with Discord
+                Log In with Discord
             </a>
-            <p class="text-xs text-gray-500 mt-2">
-                (Clicking this button takes you to Discord for secure login)
+            <p class="text-xs text-gray-500 mt-3">
+                (You will be securely redirected to Discord for authentication)
             </p>
         </div>
     </div>
@@ -553,7 +560,7 @@
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
                 document.body.style.overflowY = 'auto'; // Re-enable scroll after loading
-            }, 1000); // Loading screen visible for 1 second
+            }, 1500); // Increased loading screen duration for dramatic effect
         });
 
         // Initially hide scrollbar while loading to prevent content flash
@@ -566,11 +573,11 @@
         function showUser(user) {
             const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png';
             userActionsDiv.innerHTML = `
-                <div class="user-info">
+                <div class="user-info-pro">
                     <img src="${avatarUrl}" alt="${user.username} Avatar">
                     <span>${user.username}${user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : ''}</span>
                 </div>
-                <button id="logout-btn" class="logout-button">Logout</button>
+                <button id="logout-btn" class="logout-button-pro">Logout</button>
             `;
 
             // Attach event listener to the logout button
