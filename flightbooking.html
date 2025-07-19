@@ -244,6 +244,77 @@
             filter: brightness(1.2); /* Make the logo stand out a bit more on dark background */
         }
 
+        /* Discord Login Button and User Info Styling */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem; /* Space between nav links and user actions */
+        }
+
+        .discord-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(90deg, #7289DA, #5A6FAE); /* Discord blue gradient */
+            color: white;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(114, 137, 218, 0.4);
+        }
+
+        .discord-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(114, 137, 218, 0.6);
+            background: linear-gradient(90deg, #5A6FAE, #7289DA); /* Reverse gradient on hover */
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: #F0F4F8; /* Light background for user info */
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #3B82F6; /* Accent border for avatar */
+        }
+
+        .user-info span {
+            font-weight: 600;
+            color: #1E293B; /* Darker text for username */
+        }
+
+        .logout-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(90deg, #EF4444, #DC2626); /* Red gradient for logout */
+            color: white;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+        }
+
+        .logout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.6);
+            background: linear-gradient(90deg, #DC2626, #EF4444); /* Reverse gradient on hover */
+        }
+
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -257,8 +328,10 @@
             <nav class="flex-grow flex justify-center md:justify-end">
                 <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
                     <li><a href="index.html" class="nav-link-sleek text-lg">Home</a></li>
-                    </ul>
+                </ul>
             </nav>
+            <div class="user-actions flex-shrink-0 mt-4 md:mt-0">
+                </div>
         </div>
     </header>
 
@@ -270,32 +343,30 @@
             </p>
 
             <div class="max-w-xl mx-auto form-container-sleek">
-                <form id="flightBookingForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
-                    <input type="hidden" name="_recipients" value="ryanyagouni@gmail.com,pfaevroblox@gmail.com">
-                    <input type="hidden" name="_subject" value="New AEV Flight Booking Request">
+                <form id="flightBookingForm" action="https://formcarry.com/s/F0a0gvvInBU" method="POST" class="space-y-6">
                     <input type="hidden" name="Discord Username" id="discordUsernameHidden">
                     <div>
                         <label for="origin" class="block text-slate-700 text-sm font-semibold mb-2">Departure Airport:</label>
-                        <select id="origin" name="Departure Airport" class="input-field-sleek" required>
+                        <select id="origin" name="Departure Airport" class="input-field-sleek w-full" required>
                             <option value="">Select Departure Airport</option>
                             </select>
                     </div>
 
                     <div>
                         <label for="destination" class="block text-slate-700 text-sm font-semibold mb-2">Arrival Airport:</label>
-                        <select id="destination" name="Arrival Airport" class="input-field-sleek" required>
+                        <select id="destination" name="Arrival Airport" class="input-field-sleek w-full" required>
                             <option value="">Select Arrival Airport</option>
                             </select>
                     </div>
 
                     <div>
                         <label for="flight-date" class="block text-slate-700 text-sm font-semibold mb-2">Departure Date:</label>
-                        <input type="date" id="flight-date" name="Departure Date" class="input-field-sleek" required>
+                        <input type="date" id="flight-date" name="Departure Date" class="input-field-sleek w-full" required>
                     </div>
 
                     <div>
                         <label for="passengers" class="block text-slate-700 text-sm font-semibold mb-2">Number of Passengers:</label>
-                        <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="input-field-sleek" required>
+                        <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="input-field-sleek w-full" required>
                     </div>
 
                     <div class="flex justify-center pt-4">
@@ -326,6 +397,87 @@
     </footer>
 
     <script>
+        // Your Discord Client ID from the Discord Developer Portal
+        const CLIENT_ID = "1385353384147685567";
+        // The Redirect URI must EXACTLY match what's configured in your Discord OAuth2 settings
+        const REDIRECT_URI = "https://oneworldvirtual.github.io/main/"; 
+
+        // Discord authorization URL - CRITICAL: Changed response_type to 'token'
+        const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
+
+        // Select the div where user actions will be displayed
+        const userActionsDiv = document.querySelector(".user-actions");
+
+        // Function to display user information and the logout button
+        function showUser(user) {
+          const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png'; 
+          userActionsDiv.innerHTML = `
+            <div class="user-info">
+              <img src="${avatarUrl}" alt="User Avatar">
+              <span>${user.discriminator && user.discriminator !== '0' ? `${user.username}#${user.discriminator}` : user.username}</span>
+            </div>
+            <button id="logout-btn" class="logout-button">Logout</button>
+          `;
+
+          document.getElementById("logout-btn").onclick = () => {
+            localStorage.removeItem("discordUser");
+            window.location.href = REDIRECT_URI; // Reload to reset state and clear URL hash
+          };
+        }
+
+        // Function to display the Discord login button
+        function showLoginButton() {
+          userActionsDiv.innerHTML = `
+            <a href="${AUTH_URL}" class="discord-login-btn">Login with Discord</a>
+          `;
+        }
+
+        // --- Main login state management logic ---
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const token = params.get("access_token"); // We are now expecting 'access_token'
+
+        const savedUser = JSON.parse(localStorage.getItem("discordUser"));
+
+        if (token) {
+          // If a token is present in the URL (after a new Discord login)
+          window.history.replaceState({}, document.title, REDIRECT_URI); // Clean the URL
+
+          fetch("https://discord.com/api/users/@me", {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          .then(res => {
+            if (!res.ok) {
+              console.error("Discord API error:", res.status, res.statusText);
+              localStorage.removeItem("discordUser"); // Clear stale user data
+              showLoginButton();
+              throw new Error("Failed to fetch user data from Discord");
+            }
+            return res.json();
+          })
+          .then(user => {
+            if (user.id) {
+              localStorage.setItem("discordUser", JSON.stringify(user));
+              showUser(user);
+            } else {
+              console.error("Invalid Discord user data received:", user);
+              localStorage.removeItem("discordUser");
+              showLoginButton();
+            }
+          })
+          .catch(error => {
+            console.error("Error during Discord user fetch or processing:", error);
+            localStorage.removeItem("discordUser");
+            showLoginButton();
+          });
+        } else if (savedUser) {
+          showUser(savedUser);
+        } else {
+          showLoginButton();
+        }
+
         // List of unique airports extracted from the provided image
         const airports = [
             "Gran Canaria", "Punta Cana", "Larnaca", "London Gatwick",
@@ -374,12 +526,12 @@
             populateAirportSelects();
 
             // Populate Discord username from localStorage
-            const savedUser = JSON.parse(localStorage.getItem("discordUser"));
-            if (savedUser && savedUser.username) {
+            const userFromLocalStorage = JSON.parse(localStorage.getItem("discordUser"));
+            if (userFromLocalStorage && userFromLocalStorage.username) {
                 // For modern Discord usernames (without discriminator)
-                const username = savedUser.discriminator && savedUser.discriminator !== '0'
-                    ? `${savedUser.username}#${savedUser.discriminator}`
-                    : savedUser.username;
+                const username = userFromLocalStorage.discriminator && userFromLocalStorage.discriminator !== '0'
+                    ? `${userFromLocalStorage.username}#${userFromLocalStorage.discriminator}`
+                    : userFromLocalStorage.username;
                 discordUsernameHidden.value = username;
                 // if (savedUser.email) { // Uncomment if you get email from Discord
                 //     discordEmailHidden.value = savedUser.email;
@@ -417,7 +569,7 @@
                         method: 'POST',
                         body: formData,
                         headers: {
-                            'Accept': 'application/json' // Important for Formspree to return JSON
+                            'Accept': 'application/json' // Important for Formcarry to return JSON
                         }
                     });
 
@@ -426,9 +578,10 @@
                         flightBookingForm.reset(); // Clear form after successful submission
                     } else {
                         const data = await response.json();
+                        // Formcarry returns errors in 'data.errors' if validation fails or other issues.
+                        // You might want to inspect `data` for specific error messages from Formcarry.
                         if (data.errors) {
-                            // Formspree often returns errors if something is misconfigured but still records the submission
-                            showMessageBox("Your flight booking has been recorded", `Please open a ticket in our server, With the same exact information please.`);
+                            showMessageBox("Submission Failed", `There was an issue with your submission: ${data.errors.map(err => err.message).join(', ')}. Please try again.`);
                         } else {
                             showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
                         }
