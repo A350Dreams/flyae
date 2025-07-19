@@ -369,6 +369,15 @@
                         <input type="number" id="passengers" name="Number of Passengers" min="1" value="1" class="input-field-sleek w-full" required>
                     </div>
 
+                    <div>
+                        <label for="flight-class" class="block text-slate-700 text-sm font-semibold mb-2">Class:</label>
+                        <select id="flight-class" name="Flight Class" class="input-field-sleek w-full" required>
+                            <option value="Economy">Economy</option>
+                            <option value="Business">Business</option>
+                            <option value="First Class">First Class</option>
+                        </select>
+                    </div>
+
                     <div class="flex justify-center pt-4">
                         <button type="submit" class="btn-submit-sleek">
                             Submit Booking
@@ -549,9 +558,10 @@
                 const destination = destinationSelect.value;
                 const flightDate = document.getElementById('flight-date').value;
                 const passengers = document.getElementById('passengers').value;
+                const flightClass = document.getElementById('flight-class').value; // Get the selected class
 
                 // Basic validation
-                if (origin === "" || destination === "" || flightDate === "" || passengers === "") {
+                if (origin === "" || destination === "" || flightDate === "" || passengers === "" || flightClass === "") {
                     showMessageBox("Validation Error", "Please fill in all flight details.");
                     return;
                 }
