@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEV Moderator Dashboard</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase global variables
+        window.initializeApp = initializeApp;
+        window.getAuth = getAuth;
+        window.signInAnonymously = signInAnonymously;
+        window.signInWithCustomToken = signInWithCustomToken;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.getFirestore = getFirestore;
+        window.doc = doc;
+        window.getDoc = getDoc;
+        window.addDoc = addDoc;
+        window.setDoc = setDoc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+        window.onSnapshot = onSnapshot;
+        window.collection = collection;
+        window.query = query;
+    </script>
+    <style>
+        /* Custom styles to match the aesthetic of the original file */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: #F8FAFC;
+            color: #334155;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            color: #0F172A;
+        }
+        .header-sleek {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .discord-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(90deg, #7289DA, #5A6FAE);
+            color: white;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(114, 137, 218, 0.4);
+        }
+        .discord-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(114, 137, 218, 0.6);
+            background: linear-gradient(90deg, #5A6FAE, #7289DA);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: #F0F4F8;
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #3B82F6;
+        }
+        .user-info span {
+            font-weight: 600;
+            color: #1E293B;
+        }
+        .logout-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(90deg, #EF4444, #DC2626);
+            color: white;
+            border-radius: 9999px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+        }
+        .logout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.6);
+            background: linear-gradient(90deg, #DC2626, #EF4444);
+        }
+        .card-background-sleek {
+            background-color: #FFFFFF;
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+        .section-heading-sleek {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            display: inline-block;
+            font-size: 3rem;
+            letter-spacing: 0.03em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.02);
+            color: #1A202C;
+        }
+        .section-heading-sleek::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8);
+            border-radius: 2px;
+        }
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .message-box-overlay.show {
+            display: flex;
+        }
+        .message-box-content {
+            background-color: #FFFFFF;
+            padding: 3.5rem 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            border: 2px solid #3B82F6;
+            color: #1E293B;
+        }
+        .message-box-content h3 {
+            color: #1D4ED8;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        .message-box-content p {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #4A5568;
+        }
+        .message-box-content button {
+            background: linear-gradient(90deg, #EF4444, #DC2626);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .message-box-content button:hover {
+            background: linear-gradient(90deg, #DC2626, #EF4444);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6);
+        }
+        .container-sleek {
+            max-width: 1300px;
+        }
+        .py-section-sleek {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <header class="header-sleek py-4 px-6 md:px-12">
+        <div class="container container-sleek mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-gray-900">AEV <span class="text-blue-600">Dashboard</span></h1>
+            </div>
+            <nav class="flex-grow flex justify-center md:justify-end">
+                <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
+                    <!-- Nav links here if needed -->
+                </ul>
+            </nav>
+            <div class="user-actions flex-shrink-0 mt-4 md:mt-0">
+                <!-- User info or login button will be injected here -->
+            </div>
+        </div>
+    </header>
+
+    <main class="container container-sleek mx-auto py-section-sleek px-6 md:px-12">
+        <section id="dashboard-section" class="card-background-sleek p-8 md:p-12 mb-content-sleek relative overflow-hidden">
+            <h2 class="section-heading-sleek text-center mx-auto mb-10">Moderator Flight Bookings</h2>
+            <div id="dashboard-content" class="text-center">
+                <!-- Content will be dynamically loaded here based on login status -->
+                <div class="flex justify-center items-center h-full">
+                    <p class="text-2xl text-slate-500">Please log in to view the dashboard.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="messageBoxOverlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <h3 id="messageBoxTitle" class="text-2xl font-bold"></h3>
+            <p id="messageBoxText"></p>
+            <button id="messageBoxCloseButton">Close</button>
+        </div>
+    </div>
+
+    <footer class="footer-sleek py-8 px-6 md:px-12 mt-16 bg-slate-900 text-slate-300">
+        <div class="container container-sleek mx-auto text-center">
+            <p class="text-lg mb-4">&copy; 2024 Air Europa Virtual. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Use the provided global variables for Firebase
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- Firebase Initialization ---
+        let db, auth;
+        const initFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log('Signed in with custom token.');
+                } else {
+                    await signInAnonymously(auth);
+                    console.log('Signed in anonymously.');
+                }
+            } catch (error) {
+                console.error("Firebase initialization or authentication failed:", error);
+                showMessageBox("Error", "Failed to connect to the database. Please try again later.");
+            }
+        };
+
+        // --- Discord OAuth2 and Moderator Logic ---
+        const CLIENT_ID = "1385353384147685567";
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
+        const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
+
+        // The list of allowed moderator Discord User IDs
+        const MODERATOR_IDS = [
+            "841067718110347314",
+            "1129726655569600602",
+            "1392997382660165833"
+        ];
+
+        const userActionsDiv = document.querySelector(".user-actions");
+        const dashboardContent = document.getElementById("dashboard-content");
+        
+        let currentUser = null;
+
+        // Function to display user info and logout button
+        function showUser(user) {
+            const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png';
+            userActionsDiv.innerHTML = `
+                <div class="user-info">
+                    <img src="${avatarUrl}" alt="User Avatar">
+                    <span>${user.discriminator && user.discriminator !== '0' ? `${user.username}#${user.discriminator}` : user.username}</span>
+                </div>
+                <button id="logout-btn" class="logout-button">Logout</button>
+            `;
+            document.getElementById("logout-btn").onclick = () => {
+                localStorage.removeItem("discordUser");
+                window.location.href = REDIRECT_URI;
+            };
+        }
+
+        // Function to display login button
+        function showLoginButton() {
+            userActionsDiv.innerHTML = `<a href="${AUTH_URL}" class="discord-login-btn">Login with Discord</a>`;
+        }
+        
+        // --- Dashboard UI Logic ---
+        function renderDashboard(bookings) {
+            if (!bookings || bookings.length === 0) {
+                dashboardContent.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-96">
+                        <svg class="w-24 h-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                        <p class="mt-4 text-xl text-gray-500">No flight bookings found.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHtml = `
+                <div class="overflow-x-auto shadow-md rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discord User</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Route</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Passengers</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Approved</th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Actions</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            ${bookings.map(booking => `
+                                <tr class="${booking.approved ? 'bg-green-50' : 'bg-red-50'} hover:bg-gray-100 transition-colors duration-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.id.substring(0, 8)}...</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${booking['Discord Username']}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${booking['Departure Airport']} &rarr; ${booking['Arrival Airport']}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking['Departure Date']}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking['Number of Passengers']}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking['Flight Class']}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${booking.approved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                            ${booking.approved ? 'Yes' : 'No'}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                        <button data-id="${booking.id}" class="toggle-btn text-blue-600 hover:text-blue-900 font-bold">
+                                            ${booking.approved ? 'Deny' : 'Approve'}
+                                        </button>
+                                        <button data-id="${booking.id}" class="delete-btn text-red-600 hover:text-red-900 font-bold">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            dashboardContent.innerHTML = tableHtml;
+
+            // Attach event listeners for the buttons
+            dashboardContent.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const docId = e.target.dataset.id;
+                    const bookingRef = doc(db, `artifacts/${appId}/public/data/flightBookings`, docId);
+                    const docSnap = await getDoc(bookingRef);
+                    if (docSnap.exists()) {
+                        const currentApprovedStatus = docSnap.data().approved;
+                        try {
+                            await updateDoc(bookingRef, { approved: !currentApprovedStatus });
+                            console.log("Document successfully updated!");
+                        } catch (error) {
+                            console.error("Error updating document: ", error);
+                            showMessageBox("Error", "Failed to update booking status. Please try again.");
+                        }
+                    }
+                });
+            });
+
+            dashboardContent.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const docId = e.target.dataset.id;
+                    const bookingRef = doc(db, `artifacts/${appId}/public/data/flightBookings`, docId);
+                    try {
+                        await deleteDoc(bookingRef);
+                        console.log("Document successfully deleted!");
+                    } catch (error) {
+                        console.error("Error deleting document: ", error);
+                        showMessageBox("Error", "Failed to delete booking. Please try again.");
+                    }
+                });
+            });
+        }
+        
+        // --- General UI Functions ---
+        const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+        const messageBoxTitle = document.getElementById('messageBoxTitle');
+        const messageBoxText = document.getElementById('messageBoxText');
+        const messageBoxCloseButton = document.getElementById('messageBoxCloseButton');
+
+        function showMessageBox(title, message) {
+            messageBoxTitle.textContent = title;
+            messageBoxText.textContent = message;
+            messageBoxOverlay.classList.add('show');
+        }
+
+        function hideMessageBox() {
+            messageBoxOverlay.classList.remove('show');
+        }
+        messageBoxCloseButton.addEventListener('click', hideMessageBox);
+        messageBoxOverlay.addEventListener('click', (event) => {
+            if (event.target === messageBoxOverlay) {
+                hideMessageBox();
+            }
+        });
+
+        // --- Main Execution Logic ---
+        window.addEventListener('load', async () => {
+            await initFirebase();
+            
+            // Check for Discord token in URL
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const token = params.get("access_token");
+
+            // Check for a saved user
+            const savedUser = JSON.parse(localStorage.getItem("discordUser"));
+
+            if (token) {
+                window.history.replaceState({}, document.title, REDIRECT_URI);
+                try {
+                    const res = await fetch("https://discord.com/api/users/@me", {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (!res.ok) throw new Error("Failed to fetch user data from Discord");
+                    const user = await res.json();
+                    if (user.id) {
+                        localStorage.setItem("discordUser", JSON.stringify(user));
+                        currentUser = user;
+                        showUser(user);
+                    } else {
+                        throw new Error("Invalid Discord user data received");
+                    }
+                } catch (error) {
+                    console.error("Error during Discord user fetch:", error);
+                    localStorage.removeItem("discordUser");
+                    showLoginButton();
+                    showMessageBox("Login Failed", "Could not retrieve user information from Discord. Please try logging in again.");
+                }
+            } else if (savedUser) {
+                currentUser = savedUser;
+                showUser(savedUser);
+            } else {
+                showLoginButton();
+            }
+
+            // After login state is determined, check for moderator status and start Firestore listener
+            onAuthStateChanged(auth, (user) => {
+                if (currentUser && MODERATOR_IDS.includes(currentUser.id)) {
+                    // User is a moderator, show the dashboard
+                    const bookingCollectionRef = collection(db, `artifacts/${appId}/public/data/flightBookings`);
+                    
+                    const q = query(bookingCollectionRef);
+                    onSnapshot(q, (querySnapshot) => {
+                        const bookings = [];
+                        querySnapshot.forEach((doc) => {
+                            bookings.push({ id: doc.id, ...doc.data() });
+                        });
+                        // Sort bookings by creation date (or just put newest first)
+                        bookings.sort((a, b) => b.timestamp - a.timestamp); 
+                        renderDashboard(bookings);
+                    }, (error) => {
+                        console.error("Error fetching bookings:", error);
+                        dashboardContent.innerHTML = `<p class="text-red-500">Error loading bookings. Please check the console for details.</p>`;
+                    });
+                } else if (currentUser) {
+                    // Logged in but not a moderator
+                    dashboardContent.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-96">
+                            <svg class="w-24 h-24 text-red-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-8a1 1 0 10-2 0v1a1 1 0 102 0v-1zm2 0a1 1 0 10-2 0v1a1 1 0 102 0v-1zm-3-3a1 1 0 10-2 0v2a1 1 0 102 0V7zm2-2a1 1 0 10-2 0v2a1 1 0 102 0V5zM7 10a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                            <p class="mt-4 text-2xl font-bold text-red-600">Access Denied</p>
+                            <p class="text-xl text-slate-500 mt-2">You are not an authorized moderator to view this page.</p>
+                        </div>
+                    `;
+                } else {
+                    // Not logged in at all, show login prompt.
+                    dashboardContent.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-96">
+                            <p class="text-2xl text-slate-500">Please log in with Discord to continue.</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
