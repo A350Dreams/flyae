@@ -563,155 +563,95 @@
     </div>
 
     <script>
-        // Your Discord Client ID from the Discord Developer Portal
-        // IMPORTANT: Update this with YOUR Discord Application's Client ID
-        const CLIENT_ID = "1394071712517328947";
-        // The Redirect URI must EXACTLY match what's configured in your Discord OAuth2 settings
-        // IMPORTANT: Update this with YOUR Redirect URI
-        const REDIRECT_URI = "https://a350dreams.github.io/flyae/"; // e.g., "https://yourairvirtual.github.io/aev/"
+// --- Start of Updated Script ---
 
-        // Discord authorization URL
-        const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
+// This script handles Discord OAuth2 authentication for your virtual airline website.
+// It checks for a Discord token in the URL or a saved user in local storage.
 
-        // Select elements
-        const userActionsDiv = document.querySelector(".user-actions");
-        const loginModal = document.getElementById("loginModal");
-        const modalLoginButton = document.getElementById("modalLoginButton");
-        const loadingScreen = document.getElementById('loading-screen');
-        const modalCreatorAlert = document.getElementById('modalCreatorAlert');
-        const readInput = document.getElementById('readInput');
+// Define constants for the OAuth2 flow.
+// The REDIRECT_URI must match the one configured in your Discord Developer Portal.
+const REDIRECT_URI = "https://a350dreams.github.io/flyae/"; // <-- Ensure this is your correct URL
+const CLIENT_ID = "1396617811731943514"; // <-- Replace with your Discord Client ID
 
-        /**
-         * Hides the loading screen.
-         * This function runs when the browser's 'load' event fires.
-         */
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                document.body.style.overflowY = 'auto'; // Re-enable scroll after loading
-            }, 1800); // Increased loading screen duration for a premium feel
-        });
+// Function to handle the login button display
+function showLoginButton() {
+    // This function should show a button that links to the Discord OAuth2 URL.
+    // Example: document.getElementById('login-button').style.display = 'block';
+    // The link should look like this:
+    // `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=identify`
+    console.log("Showing login button.");
+    // This is a placeholder for your actual UI logic.
+}
 
-        // Initially hide scrollbar while loading to prevent content flash
-        document.body.style.overflowY = 'hidden';
+// Function to display user information
+function showUser(user) {
+    // This function should update the UI with the logged-in user's data.
+    // Example: document.getElementById('user-info').textContent = `Welcome, ${user.username}!`;
+    console.log("Showing user:", user);
+    // This is a placeholder for your actual UI logic.
+}
 
-        /**
-         * Displays user information (avatar, username) and a logout button.
-         * @param {object} user - The Discord user object.
-         */
-        function showUser(user) {
-            const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://discord.com/assets/f135b1fcd3d2c4935480d19e910540d5.png';
-            userActionsDiv.innerHTML = `
-                <div class="user-info-sleek">
-                    <img src="${avatarUrl}" alt="${user.username} Avatar">
-                    <span>${user.username}${user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : ''}</span>
-                </div>
-                <button id="logout-btn" class="logout-button-sleek">Logout</button>
-            `;
+// Main function to check for a token and handle authentication
+async function handleDiscordAuth() {
+    // Try to get a saved user from local storage first.
+    const savedUser = JSON.parse(localStorage.getItem("discordUser"));
 
-            // Attach event listener to the logout button
-            document.getElementById("logout-btn").onclick = () => {
-                localStorage.removeItem("discordUser"); // Clear user data from local storage
-                window.location.replace(REDIRECT_URI);
-            };
+    // Extract the access token from the URL hash if it exists.
+    const urlParams = new URLSearchParams(window.location.hash.substring(1));
+    const token = urlParams.get('access_token');
 
-            // Hide the login modal if it's currently shown
-            loginModal.classList.remove("show");
-            loginModal.classList.remove("visible"); // Ensure visibility is removed
-            loginModal.style.opacity = '0';
-            loginModal.style.visibility = 'hidden';
+    if (token) {
+        // If a new token is found in the URL, remove it from the address bar.
+        // This keeps the URL clean and prevents the token from being exposed.
+        window.history.replaceState({}, document.title, REDIRECT_URI);
 
-        }
-
-        /**
-         * Displays the custom Discord login modal and the creator alert within it.
-         */
-        function showLoginButton() {
-            // Set the modal's login button href
-            modalLoginButton.href = AUTH_URL;
-            // Initially disable the login button
-            modalLoginButton.classList.remove('enabled');
-
-            // Show the modal
-            loginModal.classList.add("show");
-            loginModal.style.opacity = '1';
-            loginModal.style.visibility = 'visible';
-            loginModal.querySelector('.modal-content-sleek').style.transform = 'translateY(0)';
-
-
-            // Show the creator alert inside the modal after a short delay
-            setTimeout(() => {
-                modalCreatorAlert.classList.add('show');
-            }, 600); // Show alert 0.6 seconds after modal appears
-
-            // Clear user actions div in header
-            userActionsDiv.innerHTML = '';
-        }
-
-        // Event listener for the 'read' input field
-        readInput.addEventListener('input', () => {
-            if (readInput.value.toLowerCase() === 'read') {
-                modalLoginButton.classList.add('enabled');
-                modalCreatorAlert.style.opacity = '0'; // Hide the alert
-                modalCreatorAlert.style.transform = 'translateY(-15px)'; // Slide up as it fades
-                setTimeout(() => {
-                    modalCreatorAlert.style.display = 'none'; // Fully remove it after transition
-                }, 600);
-            } else {
-                modalLoginButton.classList.remove('enabled');
-                modalCreatorAlert.style.display = 'block'; // Make sure it's display block for transition
-                setTimeout(() => { // Re-show with slight delay if needed
-                    modalCreatorAlert.style.opacity = '1';
-                    modalCreatorAlert.style.transform = 'translateY(0)';
-                }, 10); // Small delay to re-trigger transition
-            }
-        });
-
-
-        // --- Main login state management logic ---
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-        const token = params.get("access_token");
-
-        const savedUser = JSON.parse(localStorage.getItem("discordUser"));
-
-        if (token) {
-            window.history.replaceState({}, document.title, REDIRECT_URI);
-
-            fetch("https://discord.com/api/users/@me", {
+        try {
+            // Use the new token to fetch the user's data from Discord.
+            const response = await fetch("https://discord.com/api/users/@me", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            })
-            .then(res => {
-                if (!res.ok) {
-                    console.error("Discord API error:", res.status, res.statusText);
-                    localStorage.removeItem("discordUser");
-                    showLoginButton();
-                    throw new Error(`Failed to fetch user data from Discord: ${res.statusText}`);
-                }
-                return res.json();
-            })
-            .then(user => {
-                if (user.id) {
-                    localStorage.setItem("discordUser", JSON.stringify(user));
-                    showUser(user);
-                } else {
-                    console.error("Invalid Discord user data received:", user);
-                    localStorage.removeItem("discordUser");
-                    showLoginButton();
-                }
-            })
-            .catch(error => {
-                console.error("Error during Discord user fetch or processing:", error);
-                localStorage.removeItem("discordUser");
-                showLoginButton();
             });
-        } else if (savedUser) {
-            showUser(savedUser);
-        } else {
+
+            if (!response.ok) {
+                // If the API call fails, log the error and clear the saved user data.
+                console.error("Discord API error:", response.status, response.statusText);
+                throw new Error(`Failed to fetch user data from Discord: ${response.statusText}`);
+            }
+
+            const user = await response.json();
+
+            if (user && user.id) {
+                // If user data is valid, save it to local storage and update the UI.
+                localStorage.setItem("discordUser", JSON.stringify(user));
+                showUser(user);
+            } else {
+                // If the user data is invalid, log the error and prompt for a new login.
+                console.error("Invalid Discord user data received:", user);
+                showLoginButton();
+            }
+        } catch (error) {
+            // Catch any errors during the fetch or JSON parsing.
+            console.error("Error during Discord user fetch or processing:", error);
+            // In case of an error, remove the potentially bad data and show the login button.
+            localStorage.removeItem("discordUser");
             showLoginButton();
         }
+    } else if (savedUser) {
+        // If no new token is present but a user is saved, display the saved user.
+        showUser(savedUser);
+    } else {
+        // If neither a token nor a saved user exists, show the login button.
+        showLoginButton();
+    }
+}
+
+// Execute the main function when the window loads.
+// This ensures the script runs after the DOM is fully loaded.
+window.onload = handleDiscordAuth;
+
+// --- End of Updated Script ---
+
     </script>
 </body>
 </html>
