@@ -6,10 +6,9 @@
     <title>Air Europa Virtual (AEV) - Book a Flight</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="ae.png" type="image/png" />
+    <link rel="icon" href="https://placehold.co/16x16/3B82F6/fff?text=AE" type="image/png" />
     <style>
         /* CUSTOM CSS FOR THE SLEEK, HIGH-TECH & INTUITIVE DESIGN */
-        /* These styles are consistent with your index.html's aesthetic */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
@@ -83,7 +82,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid #E2E8F0; /* Light gray border */
         }
-        /* No hover effect on the main booking form section itself, but could be added */
 
         /* Form Container Specific Styling - Adapting the sleek card style */
         .form-container-sleek {
@@ -131,6 +129,18 @@
             box-shadow: 0 15px 35px rgba(29, 78, 216, 0.6); /* Deeper blue shadow on hover */
             background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Reverse gradient on hover */
         }
+        .btn-submit-sleek:disabled {
+            background: #CBD5E1; /* Light gray background for disabled state */
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-submit-sleek:disabled:hover {
+            background: #CBD5E1;
+            transform: none;
+            box-shadow: none;
+        }
+
 
         /* Section Heading - Consistent with index.html */
         .section-heading-sleek {
@@ -301,8 +311,6 @@
             padding: 0.75rem 2rem;
             background: linear-gradient(90deg, #EF4444, #DC2626); /* Red gradient for logout */
             color: white;
-            border-radius: 9999px; /* Pill shape */
-            font-weight: 600;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -314,7 +322,6 @@
             box-shadow: 0 6px 15px rgba(239, 68, 68, 0.6);
             background: linear-gradient(90deg, #DC2626, #EF4444); /* Reverse gradient on hover */
         }
-
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -322,12 +329,13 @@
     <header class="header-sleek py-4 px-6 md:px-12">
         <div class="container container-sleek mx-auto flex flex-col md:flex-row items-center justify-between">
             <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                <img src="ae.png" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-300 footer-logo">
+                <img src="https://placehold.co/40x40/3B82F6/fff?text=AE" alt="AEV Logo" class="h-16 w-16 rounded-full shadow-lg border border-blue-300 footer-logo">
                 <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-gray-900">Air Europa <span class="text-blue-600">Virtual</span></h1>
             </div>
             <nav class="flex-grow flex justify-center md:justify-end">
                 <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
                     <li><a href="index.html" class="nav-link-sleek text-lg">Home</a></li>
+                   
                 </ul>
             </nav>
             <div class="user-actions flex-shrink-0 mt-4 md:mt-0">
@@ -343,7 +351,7 @@
             </p>
 
             <div class="max-w-xl mx-auto form-container-sleek">
-                <form id="flightBookingForm" action="https://formcarry.com/s/F0a0gvvInBU" method="POST" class="space-y-6">
+                <form id="flightBookingForm" class="space-y-6">
                     <input type="hidden" name="Discord Username" id="discordUsernameHidden">
                     <div>
                         <label for="origin" class="block text-slate-700 text-sm font-semibold mb-2">Departure Airport:</label>
@@ -379,7 +387,7 @@
                     </div>
 
                     <div class="flex justify-center pt-4">
-                        <button type="submit" class="btn-submit-sleek">
+                        <button type="submit" id="submitButton" class="btn-submit-sleek">
                             Submit Booking
                         </button>
                     </div>
@@ -405,7 +413,26 @@
         </div>
     </footer>
 
-    <script>
+    <!-- Firebase SDKs and script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD09Wu6-wyIIDKkGi4TKhn4NKax1r7AWUk",
+            authDomain: "flyae-backend.firebaseapp.com",
+            projectId: "flyae-backend",
+            storageBucket: "flyae-backend.firebasestorage.app",
+            messagingSenderId: "610108789668",
+            appId: "1:610108789668:web:ae0d71ab7970b0dbb72731",
+            measurementId: "G-MHQJ6BBW4G"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         // Your Discord Client ID from the Discord Developer Portal
         const CLIENT_ID = "1385353384147685567";
         // The Redirect URI must EXACTLY match what's configured in your Discord OAuth2 settings
@@ -416,6 +443,7 @@
 
         // Select the div where user actions will be displayed
         const userActionsDiv = document.querySelector(".user-actions");
+        const submitButton = document.getElementById("submitButton");
 
         // Function to display user information and the logout button
         function showUser(user) {
@@ -462,6 +490,7 @@
               console.error("Discord API error:", res.status, res.statusText);
               localStorage.removeItem("discordUser"); // Clear stale user data
               showLoginButton();
+              submitButton.disabled = true; // Disable button on API error
               throw new Error("Failed to fetch user data from Discord");
             }
             return res.json();
@@ -470,22 +499,28 @@
             if (user.id) {
               localStorage.setItem("discordUser", JSON.stringify(user));
               showUser(user);
+              submitButton.disabled = false; // Enable button on successful login
             } else {
               console.error("Invalid Discord user data received:", user);
               localStorage.removeItem("discordUser");
               showLoginButton();
+              submitButton.disabled = true;
             }
           })
           .catch(error => {
             console.error("Error during Discord user fetch or processing:", error);
             localStorage.removeItem("discordUser");
             showLoginButton();
+            submitButton.disabled = true;
           });
         } else if (savedUser) {
           showUser(savedUser);
+          submitButton.disabled = false; // Enable button if user is already logged in
         } else {
           showLoginButton();
+          submitButton.disabled = true; // Disable button if no user is logged in
         }
+
 
         // List of unique airports extracted from the provided image
         const airports = [
@@ -493,29 +528,30 @@
             "London Southampton", "Kittila", "Cibao", "Arroyo Barril", "Menorca"
         ].sort(); // Sort alphabetically for better user experience
 
+        // Function to show custom message box
+        function showMessageBox(title, message) {
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+            const messageBoxTitle = document.getElementById('messageBoxTitle');
+            const messageBoxText = document.getElementById('messageBoxText');
+            
+            messageBoxTitle.textContent = title;
+            messageBoxText.textContent = message;
+            messageBoxOverlay.classList.add('show');
+        }
+
+        // Function to hide custom message box
+        function hideMessageBox() {
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+            messageBoxOverlay.classList.remove('show');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const originSelect = document.getElementById('origin');
             const destinationSelect = document.getElementById('destination');
             const flightBookingForm = document.getElementById('flightBookingForm');
             const discordUsernameHidden = document.getElementById('discordUsernameHidden');
-            // const discordEmailHidden = document.getElementById('discordEmailHidden'); // Uncomment if you get email from Discord
-
-            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
-            const messageBoxTitle = document.getElementById('messageBoxTitle');
-            const messageBoxText = document.getElementById('messageBoxText');
             const messageBoxCloseButton = document.getElementById('messageBoxCloseButton');
-
-            // Function to show custom message box
-            function showMessageBox(title, message) {
-                messageBoxTitle.textContent = title;
-                messageBoxText.textContent = message;
-                messageBoxOverlay.classList.add('show');
-            }
-
-            // Function to hide custom message box
-            function hideMessageBox() {
-                messageBoxOverlay.classList.remove('show');
-            }
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
 
             // Populate dropdowns with airport options
             function populateAirportSelects() {
@@ -542,23 +578,25 @@
                     ? `${userFromLocalStorage.username}#${userFromLocalStorage.discriminator}`
                     : userFromLocalStorage.username;
                 discordUsernameHidden.value = username;
-                // if (savedUser.email) { // Uncomment if you get email from Discord
-                //     discordEmailHidden.value = savedUser.email;
-                // }
             } else {
                 discordUsernameHidden.value = "Not Logged In (or error)";
             }
 
-
-            // Handle form submission
+            // --- FORM SUBMISSION LOGIC ---
             flightBookingForm.addEventListener('submit', async (event) => {
                 event.preventDefault(); // Prevent default form submission
+                
+                // Check if user is logged in before allowing submission
+                if (discordUsernameHidden.value === "Not Logged In (or error)") {
+                    showMessageBox("Login Required", "You must log in with Discord before booking a flight.");
+                    return;
+                }
 
                 const origin = originSelect.value;
                 const destination = destinationSelect.value;
                 const flightDate = document.getElementById('flight-date').value;
                 const passengers = document.getElementById('passengers').value;
-                const flightClass = document.getElementById('flight-class').value; // Get the selected class
+                const flightClass = document.getElementById('flight-class').value;
 
                 // Basic validation
                 if (origin === "" || destination === "" || flightDate === "" || passengers === "" || flightClass === "") {
@@ -570,35 +608,32 @@
                     showMessageBox("Invalid Route", "Departure and Arrival airports cannot be the same. Please select different airports.");
                     return;
                 }
-
-                // Use FormData to easily get all form data
-                const formData = new FormData(flightBookingForm);
+                
+                const bookingData = {
+                    discordUsername: discordUsernameHidden.value,
+                    origin: origin,
+                    destination: destination,
+                    flightDate: flightDate,
+                    passengers: parseInt(passengers, 10),
+                    flightClass: flightClass,
+                    timestamp: new Date().toISOString()
+                };
 
                 try {
-                    const response = await fetch(flightBookingForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json' // Important for Formcarry to return JSON
-                        }
-                    });
-
-                    if (response.ok) {
-                        showMessageBox("Booking Submitted!", "Your flight booking request has been successfully sent. We will get back to you shortly!");
-                        flightBookingForm.reset(); // Clear form after successful submission
-                    } else {
-                        const data = await response.json();
-                        // Formcarry returns errors in 'data.errors' if validation fails or other issues.
-                        // You might want to inspect `data` for specific error messages from Formcarry.
-                        if (data.errors) {
-                            showMessageBox("Submission Failed", `There was an issue with your submission: ${data.errors.map(err => err.message).join(', ')}. Please try again.`);
-                        } else {
-                            showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
-                        }
-                    }
+                    // Get a reference to the bookings collection
+                    // The path is /artifacts/{appId}/public/data/flight_bookings
+                    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                    const bookingsCollectionPath = `/artifacts/${appId}/public/data/flight_bookings`;
+                    const bookingsRef = collection(db, bookingsCollectionPath);
+                    
+                    // Add the new booking document to Firestore
+                    await addDoc(bookingsRef, bookingData);
+                    
+                    showMessageBox("Booking Confirmed!", "Your flight booking has been successfully submitted. Thank you for choosing AEV!");
+                    flightBookingForm.reset(); // Clear form after successful submission
                 } catch (error) {
-                    console.error('Error submitting form:', error);
-                    showMessageBox("Submission Error", "An unexpected error occurred. Please check your internet connection and try again.");
+                    console.error('Error submitting booking:', error);
+                    showMessageBox("Submission Failed", "There was an error submitting your booking. Please try again later.");
                 }
             });
 
