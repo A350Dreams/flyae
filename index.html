@@ -187,40 +187,12 @@
             transform: translateY(-1px);
         }
 
-        /* Loading Screen - high-tech & smooth */
-        #loading-screen {
-            background: linear-gradient(135deg, #0F172A, #1E293B); /* Very dark, almost black gradient */
-            transition: opacity 1.5s ease-out, visibility 1.5s ease-out; /* Longer, smoother transition */
-        }
-        .loading-logo {
-            width: 220px; /* Even larger logo */
-            height: 220px;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4)); /* Stronger glow */
-        }
-        .loading-spinner {
-            border: 10px solid rgba(255, 255, 255, 0.1); /* Thicker, more subtle border */
-            border-top: 10px solid #3B82F6; /* Bright blue spinner */
-            width: 90px; /* Larger spinner */
-            height: 90px;
-            animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite, fadeIn 1s ease-in; /* Faster, smoother spin */
-        }
-        .loading-text {
-            color: #E2E8F0; /* Off-white text */
-            font-size: 2.5rem; /* Larger text */
-            font-weight: 700;
-            letter-spacing: 0.12em; /* More spacing */
-            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Custom login modal - sleek & functional */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
         }
 
-        /* Custom login modal - sleek & functional */
         .modal-content-sleek {
             background-color: #FFFFFF;
             padding: 3rem;
@@ -376,179 +348,182 @@
             animation: bounce-subtle 1.5s infinite ease-in-out;
         }
 
-        /* Class to hide loading screen */
-        .loading-hidden {
+        /* Main content container */
+        #main-content {
             opacity: 0;
             visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
+
+        #main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
     </style>
 </head>
 <body class="bg-blue-50 text-slate-700">
 
-    <div id="loading-screen" class="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-50">
-        <img src="air europa.png" alt="Air Europa Virtual Logo" class="loading-logo mb-10">
-        <div class="loading-spinner mb-8"></div>
-        <div class="loading-text">Loading...</div>
+    <div id="main-content">
+        <header class="header-sleek py-6 px-8 md:px-20 rounded-b-4xl">
+            <div class="container-sleek mx-auto flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center space-x-6 mb-6 md:mb-0">
+                    <img src="air europa.png" alt="AEV Logo" class="h-24 w-24 rounded-full shadow-lg border-4 border-blue-500">
+                    <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter text-blue-900">Air Europa <span class="text-yellow-500">Virtual</span></h1>
+                </div>
+                <nav class="flex-grow flex justify-center md:justify-end">
+                    <ul class="flex flex-wrap justify-center md:space-x-12 space-x-6">
+                        <li><a href="flightbooking.html" class="nav-link-sleek text-xl">Book your flight</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions mt-6 md:mt-0 md:ml-12 flex items-center">
+                    </div>
+            </div>
+        </header>
+
+        <section id="home" class="hero-background-sleek text-white py-36 md:py-52 flex items-center justify-center rounded-b-5xl">
+            <div class="container-sleek mx-auto text-center relative z-10">
+                <h2 class="text-7xl md:text-9xl font-extrabold mb-10 leading-tight animate-fade-in-scale text-shadow-xl">
+                    Your Sky, Your Journey.
+                </h2>
+                <p class="text-2xl md:text-3xl mb-16 max-w-6xl mx-auto opacity-95 font-light animate-fade-in-scale animate-delay-300">
+                    Immerse yourself in the pinnacle of virtual aviation. Air Europa Virtual offers a cutting-edge platform for pilots to explore realistic operations, a vibrant community, and unparalleled flight experiences.
+                </p>
+                <a href="#join" class="btn-primary-sleek text-3xl animate-bounce-subtle animate-delay-600">
+                    Start Your Flight
+                </a>
+            </div>
+        </section>
+
+        <main class="container-sleek mx-auto py-section-sleek px-8 md:px-16">
+
+            <section id="about" class="card-background-sleek p-12 md:p-20 mb-content-sleek">
+                <div class="flex flex-col md:flex-row items-center md:space-x-20">
+                    <div class="md:w-1/2 mb-12 md:mb-0">
+                        <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="content-image-sleek w-full h-auto">
+                    </div>
+                    <div class="md:w-1/2 text-gray-700">
+                        <h3 class="section-heading-sleek text-blue-800 mb-10">About Air Europa Virtual</h3>
+                        <p class="text-xl leading-relaxed mb-8">
+                            Air Europa Virtual (AEV) is engineered for the discerning flight simulator enthusiast. We bridge the gap between virtual flying and real-world airline operations, offering an intricate system that mirrors Air Europa's routes, fleet, and operational protocols.
+                        </p>
+                        <p class="text-xl leading-relaxed mb-8">
+                            Our dynamic environment encourages pilots to push their boundaries, engage in challenging scenarios, and master complex aircraft systems. AEV is a community built on shared passion, where collaboration and continuous learning are at the core of every flight.
+                        </p>
+                        <p class="text-xl leading-relaxed font-semibold">
+                            Experience advanced flight tracking, participate in global events, and become part of a forward-thinking virtual airline—all completely free of charge.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discord" class="card-background-sleek p-12 md:p-20 mb-content-sleek">
+                <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-20">
+                    <div class="md:w-1/2 mb-12 md:mb-0">
+                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="content-image-sleek w-full h-auto border-blue-400">
+                    </div>
+                    <div class="md:w-1/2 text-gray-700">
+                        <h3 class="section-heading-sleek text-blue-800 mb-10">Join Our Dynamic Discord Hub</h3>
+                        <p class="text-xl leading-relaxed mb-8">
+                            The AEV Discord server is more than just a chatroom; it's our command center. Here, you'll find real-time support, active discussions on aviation, and the opportunity to connect directly with fellow pilots and staff.
+                        </p>
+                        <ul class="list-disc list-inside text-xl leading-relaxed space-y-4 mb-10 pl-6">
+                            <li><strong>Live Flight Planning:</strong> Collaborate on routes, weather, and NOTAMs with experienced virtual pilots.</li>
+                            <li><strong>Technical Support:</strong> Get assistance with simulator setups, addon configurations, and flight tracking software.</li>
+                            <li><strong>Exclusive Events:</strong> Participate in scheduled group flights, cross-network events, and special challenges.</li>
+                            <li><strong>Knowledge Sharing:</strong> Access a rich repository of operational documents, flight guides, and tutorials.</li>
+                            <li><strong>Community Engagement:</strong> Share your flight experiences, screenshots, and videos, fostering a vibrant, supportive atmosphere.</li>
+                        </ul>
+                        <p class="text-xl leading-relaxed font-semibold">
+                            Step into our professional and engaging Discord community to elevate your virtual aviation journey.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="card-background-sleek p-12 md:p-20 mb-content-sleek text-center">
+                <h3 class="section-heading-sleek text-blue-800 mx-auto mb-12">Why Choose Air Europa Virtual?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">✈️</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Precision Operations</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Execute flights with real-world inspired procedures, contributing to a highly authentic virtual airline experience.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">📊</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Advanced Flight Tracking</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Utilize our sophisticated system to log flights, track progress, and view comprehensive statistics.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🌍</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Global Network</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Explore Air Europa's extensive real-world route network, connecting Europe to the world.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🤝</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Active Community</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Connect with a dedicated and supportive community of virtual pilots on Discord and during events.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🆓</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Free to Join & Fly</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Experience the full spectrum of AEV without any membership fees. Your passion is our priority.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🎮</div>
+                        <h4 class="text-2xl font-bold text-blue-700 mb-4">Simulator Agnostic</h4>
+                        <p class="text-gray-700 leading-relaxed">
+                            Fly with your preferred simulator: Microsoft Flight Simulator, X-Plane, Prepar3D, and more.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="join" class="bg-blue-800 text-white p-16 md:p-24 rounded-4xl shadow-2xl text-center border-t-8 border-yellow-400">
+                <h3 class="text-5xl md:text-7xl font-extrabold mb-10 text-white drop-shadow-md">Ready to Command Your Virtual Skies?</h3>
+                <p class="text-xl md:text-2xl mb-14 max-w-5xl mx-auto font-light leading-relaxed">
+                    Your advanced virtual aviation journey awaits. Click below to join our Discord server and become a part of the vibrant and professional Air Europa Virtual community.
+                </p>
+                <a href="https://discord.gg/sr4Na4j28B" target="_blank" rel="noopener noreferrer"
+                   class="btn-secondary-sleek text-3xl animate-pulse">
+                    Join AEV Discord Now!
+                </a>
+                <p class="text-sm mt-8 opacity-80">
+                </p>
+            </section>
+
+        </main>
+
+        <footer class="bg-gray-900 text-gray-400 py-12 px-8 md:px-20 mt-24 rounded-t-4xl shadow-inner-xl">
+            <div class="container-sleek mx-auto text-center">
+                <p class="text-lg mb-6">&copy; 2025 - A350Dreams. All rights reserved.</p>
+                <p class="text-base opacity-80 mb-10">
+                    Designed and developed with precision by A350Dreams for Air Europa Líneas Aéreas, S.A.U. Virtual.
+                </p>
+                <div class="flex justify-center space-x-8 mt-6">
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <header class="header-sleek py-6 px-8 md:px-20 rounded-b-4xl">
-        <div class="container-sleek mx-auto flex flex-col md:flex-row items-center justify-between">
-            <div class="flex items-center space-x-6 mb-6 md:mb-0">
-                <img src="air europa.png" alt="AEV Logo" class="h-24 w-24 rounded-full shadow-lg border-4 border-blue-500">
-                <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter text-blue-900">Air Europa <span class="text-yellow-500">Virtual</span></h1>
-            </div>
-            <nav class="flex-grow flex justify-center md:justify-end">
-                <ul class="flex flex-wrap justify-center md:space-x-12 space-x-6">
-                    <li><a href="flightbooking.html" class="nav-link-sleek text-xl">Book your flight</a></li>
-                </ul>
-            </nav>
-            <div class="user-actions mt-6 md:mt-0 md:ml-12 flex items-center">
-                </div>
-        </div>
-    </header>
-
-    <section id="home" class="hero-background-sleek text-white py-36 md:py-52 flex items-center justify-center rounded-b-5xl">
-        <div class="container-sleek mx-auto text-center relative z-10">
-            <h2 class="text-7xl md:text-9xl font-extrabold mb-10 leading-tight animate-fade-in-scale text-shadow-xl">
-                Your Sky, Your Journey.
-            </h2>
-            <p class="text-2xl md:text-3xl mb-16 max-w-6xl mx-auto opacity-95 font-light animate-fade-in-scale animate-delay-300">
-                Immerse yourself in the pinnacle of virtual aviation. Air Europa Virtual offers a cutting-edge platform for pilots to explore realistic operations, a vibrant community, and unparalleled flight experiences.
-            </p>
-            <a href="#join" class="btn-primary-sleek text-3xl animate-bounce-subtle animate-delay-600">
-                Start Your Flight
-            </a>
-        </div>
-    </section>
-
-    <main class="container-sleek mx-auto py-section-sleek px-8 md:px-16">
-
-        <section id="about" class="card-background-sleek p-12 md:p-20 mb-content-sleek">
-            <div class="flex flex-col md:flex-row items-center md:space-x-20">
-                <div class="md:w-1/2 mb-12 md:mb-0">
-                    <img src="aea banner.png" alt="Air Europa Aircraft in Flight" class="content-image-sleek w-full h-auto">
-                </div>
-                <div class="md:w-1/2 text-gray-700">
-                    <h3 class="section-heading-sleek text-blue-800 mb-10">About Air Europa Virtual</h3>
-                    <p class="text-xl leading-relaxed mb-8">
-                        Air Europa Virtual (AEV) is engineered for the discerning flight simulator enthusiast. We bridge the gap between virtual flying and real-world airline operations, offering an intricate system that mirrors Air Europa's routes, fleet, and operational protocols.
-                    </p>
-                    <p class="text-xl leading-relaxed mb-8">
-                        Our dynamic environment encourages pilots to push their boundaries, engage in challenging scenarios, and master complex aircraft systems. AEV is a community built on shared passion, where collaboration and continuous learning are at the core of every flight.
-                    </p>
-                    <p class="text-xl leading-relaxed font-semibold">
-                        Experience advanced flight tracking, participate in global events, and become part of a forward-thinking virtual airline—all completely free of charge.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="discord" class="card-background-sleek p-12 md:p-20 mb-content-sleek">
-            <div class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-20">
-                <div class="md:w-1/2 mb-12 md:mb-0">
-                    <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/665643dd8c7ac752237b5cef_Discord-OG-1200x630.jpg" alt="Discord Community Image" class="content-image-sleek w-full h-auto border-blue-400">
-                </div>
-                <div class="md:w-1/2 text-gray-700">
-                    <h3 class="section-heading-sleek text-blue-800 mb-10">Join Our Dynamic Discord Hub</h3>
-                    <p class="text-xl leading-relaxed mb-8">
-                        The AEV Discord server is more than just a chatroom; it's our command center. Here, you'll find real-time support, active discussions on aviation, and the opportunity to connect directly with fellow pilots and staff.
-                    </p>
-                    <ul class="list-disc list-inside text-xl leading-relaxed space-y-4 mb-10 pl-6">
-                        <li><strong>Live Flight Planning:</strong> Collaborate on routes, weather, and NOTAMs with experienced virtual pilots.</li>
-                        <li><strong>Technical Support:</strong> Get assistance with simulator setups, addon configurations, and flight tracking software.</li>
-                        <li><strong>Exclusive Events:</strong> Participate in scheduled group flights, cross-network events, and special challenges.</li>
-                        <li><strong>Knowledge Sharing:</strong> Access a rich repository of operational documents, flight guides, and tutorials.</li>
-                        <li><strong>Community Engagement:</strong> Share your flight experiences, screenshots, and videos, fostering a vibrant, supportive atmosphere.</li>
-                    </ul>
-                    <p class="text-xl leading-relaxed font-semibold">
-                        Step into our professional and engaging Discord community to elevate your virtual aviation journey.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="card-background-sleek p-12 md:p-20 mb-content-sleek text-center">
-            <h3 class="section-heading-sleek text-blue-800 mx-auto mb-12">Why Choose Air Europa Virtual?</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">✈️</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Precision Operations</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Execute flights with real-world inspired procedures, contributing to a highly authentic virtual airline experience.
-                    </p>
-                </div>
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">📊</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Advanced Flight Tracking</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Utilize our sophisticated system to log flights, track progress, and view comprehensive statistics.
-                    </p>
-                </div>
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🌍</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Global Network</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Explore Air Europa's extensive real-world route network, connecting Europe to the world.
-                    </p>
-                </div>
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🤝</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Active Community</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Connect with a dedicated and supportive community of virtual pilots on Discord and during events.
-                    </p>
-                </div>
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🆓</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Free to Join & Fly</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Experience the full spectrum of AEV without any membership fees. Your passion is our priority.
-                    </p>
-                </div>
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 flex flex-col items-center text-center">
-                    <div class="flex items-center justify-center h-28 w-28 bg-blue-100 text-blue-700 rounded-full mb-6 text-6xl font-extrabold shadow-inner-lg">🎮</div>
-                    <h4 class="text-2xl font-bold text-blue-700 mb-4">Simulator Agnostic</h4>
-                    <p class="text-gray-700 leading-relaxed">
-                        Fly with your preferred simulator: Microsoft Flight Simulator, X-Plane, Prepar3D, and more.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="join" class="bg-blue-800 text-white p-16 md:p-24 rounded-4xl shadow-2xl text-center border-t-8 border-yellow-400">
-            <h3 class="text-5xl md:text-7xl font-extrabold mb-10 text-white drop-shadow-md">Ready to Command Your Virtual Skies?</h3>
-            <p class="text-xl md:text-2xl mb-14 max-w-5xl mx-auto font-light leading-relaxed">
-                Your advanced virtual aviation journey awaits. Click below to join our Discord server and become a part of the vibrant and professional Air Europa Virtual community.
-            </p>
-            <a href="https://discord.gg/sr4Na4j28B" target="_blank" rel="noopener noreferrer"
-               class="btn-secondary-sleek text-3xl animate-pulse">
-                Join AEV Discord Now!
-            </a>
-            <p class="text-sm mt-8 opacity-80">
-            </p>
-        </section>
-
-    </main>
-
-    <footer class="bg-gray-900 text-gray-400 py-12 px-8 md:px-20 mt-24 rounded-t-4xl shadow-inner-xl">
-        <div class="container-sleek mx-auto text-center">
-            <p class="text-lg mb-6">&copy; 2025 - A350Dreams. All rights reserved.</p>
-            <p class="text-base opacity-80 mb-10">
-                Designed and developed with precision by A350Dreams for Air Europa Líneas Aéreas, S.A.U. Virtual.
-            </p>
-            <div class="flex justify-center space-x-8 mt-6">
-            </div>
-        </div>
-    </footer>
-
-    <div id="loginModal" class="modal-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center z-[1000] opacity-0 invisible transition-all duration-500">
-        <div class="modal-content-sleek transform translate-y-[-30px] transition-transform duration-500">
+    <div id="loginModal" class="modal-overlay fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center z-[1000] visible opacity-100 transition-all duration-500">
+        <div class="modal-content-sleek transform translate-y-0 transition-transform duration-500">
             <h3 class="text-3xl font-extrabold text-blue-700 mb-6 text-center">Secure Pilot Login</h3>
             <p class="text-lg text-gray-700 mb-8 text-center">
                 Access your personalized pilot dashboard and community features by securely logging in with Discord.
             </p>
 
-            <div id="modalCreatorAlert" class="modal-creator-alert text-center">
+            <div id="modalCreatorAlert" class="modal-creator-alert text-center show">
                 <p>Website designed and meticulously developed by <strong>A350Dreams</strong>.</p>
                 <p class="mt-3 text-sm text-gray-600">To acknowledge and proceed, please type "read" (all lowercase) in the box below:</p>
                 <input type="text" id="readInput" class="mt-3">
@@ -567,27 +542,45 @@
     </div>
 
     <script>
-        // Function to hide the loading screen
-        function hideLoadingScreen() {
-            const loadingScreen = document.getElementById('loading-screen');
-            if (loadingScreen) {
-                loadingScreen.classList.add('loading-hidden');
-            }
-        }
-
-        // The rest of your existing script
         const REDIRECT_URI = "https://a350dreams.github.io/flyae/";
         const CLIENT_ID = "1396617811731943514";
 
-        function showLoginButton() {
-            const userActions = document.querySelector('.user-actions');
-            userActions.innerHTML = `
-                <button onclick="showModal()" class="btn-primary-sleek text-lg py-3 px-6">Pilot Login</button>
-            `;
+        const mainContent = document.getElementById('main-content');
+        const loginModal = document.getElementById('loginModal');
+        const modalCreatorAlert = document.getElementById('modalCreatorAlert');
+        const readInput = document.getElementById('readInput');
+        const modalLoginButton = document.getElementById('modalLoginButton');
+        const userActions = document.querySelector('.user-actions');
+
+        function showMainContent() {
+            mainContent.classList.add('visible');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        function hideMainContent() {
+            mainContent.classList.remove('visible');
+            document.body.style.overflow = 'hidden'; // Disable scrolling
+        }
+
+        function showModal() {
+            loginModal.classList.remove('invisible', 'opacity-0');
+            loginModal.classList.add('visible', 'opacity-100');
+            modalCreatorAlert.classList.add('show');
+            readInput.value = '';
+            readInput.focus();
+            modalLoginButton.classList.remove('enabled');
+            modalLoginButton.href = '#';
+            hideMainContent();
+        }
+
+        function hideModal() {
+            loginModal.classList.remove('visible', 'opacity-100');
+            loginModal.classList.add('invisible', 'opacity-0');
+            modalCreatorAlert.classList.remove('show');
+            showMainContent();
         }
 
         function showUser(user) {
-            const userActions = document.querySelector('.user-actions');
             const avatarUrl = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'air europa.png';
             userActions.innerHTML = `
                 <div class="user-info-sleek">
@@ -596,11 +589,13 @@
                     <button onclick="logout()" class="logout-button-sleek">Logout</button>
                 </div>
             `;
+            hideModal(); // Hide modal and show content when logged in
         }
 
         function logout() {
             localStorage.removeItem("discordUser");
-            location.reload();
+            showModal(); // Show modal and hide content on logout
+            userActions.innerHTML = ''; // Clear user info
         }
 
         async function handleDiscordAuth() {
@@ -621,42 +616,18 @@
                         showUser(user);
                     } else {
                         console.error("Invalid Discord user data:", user);
-                        showLoginButton();
+                        showModal();
                     }
                 } catch (error) {
                     console.error("Error during Discord authentication:", error);
                     localStorage.removeItem("discordUser");
-                    showLoginButton();
+                    showModal();
                 }
             } else if (savedUser) {
                 showUser(savedUser);
             } else {
-                showLoginButton();
+                showModal();
             }
-        }
-
-        // Modal and login button logic
-        const loginModal = document.getElementById('loginModal');
-        const modalCreatorAlert = document.getElementById('modalCreatorAlert');
-        const readInput = document.getElementById('readInput');
-        const modalLoginButton = document.getElementById('modalLoginButton');
-
-        function showModal() {
-            loginModal.classList.remove('invisible', 'opacity-0');
-            loginModal.classList.add('visible', 'opacity-100');
-            setTimeout(() => {
-                modalCreatorAlert.classList.add('show');
-            }, 300);
-            readInput.value = '';
-            readInput.focus();
-            modalLoginButton.classList.remove('enabled');
-            modalLoginButton.href = '#';
-        }
-
-        function hideModal() {
-            loginModal.classList.remove('visible', 'opacity-100');
-            loginModal.classList.add('invisible', 'opacity-0');
-            modalCreatorAlert.classList.remove('show');
         }
 
         readInput.addEventListener('input', (e) => {
@@ -670,20 +641,8 @@
             }
         });
 
-        loginModal.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                hideModal();
-            }
-        });
-
-        // Main entry point - this function will be called once the page is fully loaded.
-        window.addEventListener('load', async () => {
-            // First, hide the loading screen
-            hideLoadingScreen();
-
-            // Then, proceed with authentication logic
-            await handleDiscordAuth();
-        });
+        // This will run when the page loads
+        window.addEventListener('load', handleDiscordAuth);
     </script>
 </body>
 </html>
