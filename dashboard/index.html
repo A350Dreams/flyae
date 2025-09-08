@@ -1,1 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEV Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="air europa.png" type="image/png" />
+    <style>
+        /* Custom CSS to match the original booking page's aesthetic */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC; /* Lightest blue-gray for the main background */
+            color: #334155; /* Slate-700 for main body text */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif; /* All headings use Inter */
+            font-weight: 800; /* Extra bold for most headings */
+            color: #0F172A; /* Darker slate-900 for strong headings */
+        }
+        h1 { font-weight: 900; } /* Even bolder for the main title */
 
+        /* Custom scrollbar - sleek & modern */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #E2E8F0; /* Light track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748B; /* Medium gray thumb */
+            border-radius: 10px;
+            border: 2px solid #F8FAFC; /* Matches body background for subtle depth */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; /* Darker on hover */
+            cursor: pointer;
+        }
+
+        /* Header and Nav - Consistent with booking page */
+        .header-sleek {
+            background-color: #FFFFFF; /* White header background */
+            border-bottom: 1px solid #E2E8F0; /* Subtle bottom border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            padding-top: 1rem; /* Adjust padding for visual balance */
+            padding-bottom: 1rem;
+        }
+        
+        /* Section Backgrounds/Cards - Consistent with booking page */
+        .card-background-sleek {
+            background-color: #FFFFFF; /* Pure white background for sections */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08); /* Soft but noticeable shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #E2E8F0; /* Light gray border */
+        }
+
+        /* Input/Select fields - Sleek and modern */
+        .input-field-sleek {
+            background-color: #FFFFFF; /* White background for inputs */
+            border: 1px solid #CBD5E1; /* Light gray border */
+            color: #1E293B; /* Dark text for input values */
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded corners for inputs */
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-field-sleek:focus {
+            outline: none;
+            border-color: #3B82F6; /* Bright blue focus border */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* Subtle blue glow on focus */
+        }
+
+        /* Submit Button - Consistent with booking page primary button */
+        .btn-submit-sleek {
+            background: linear-gradient(90deg, #1D4ED8, #3B82F6); /* Strong blue gradient */
+            color: white;
+            padding: 1.25rem 3.5rem; /* Generous padding */
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 700; /* Bolder text */
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.4); /* Blue shadow */
+            letter-spacing: 0.08em; /* Slightly wider spacing */
+            text-transform: uppercase;
+        }
+        .btn-submit-sleek:hover {
+            transform: translateY(-5px) scale(1.03); /* More pronounced lift and slight scale */
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.6); /* Deeper blue shadow on hover */
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Reverse gradient on hover */
+        }
+
+        /* Section Heading - Consistent with booking page */
+        .section-heading-sleek {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            display: inline-block;
+            font-size: 3rem;
+            letter-spacing: 0.03em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.02);
+            color: #1A202C; /* Dark charcoal for heading text */
+        }
+        .section-heading-sleek::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Blue gradient underline */
+            border-radius: 2px;
+        }
+        
+        /* Dashboard-specific styles */
+        .stat-card {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1D4ED8;
+            line-height: 1;
+        }
+        .stat-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .dashboard-table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .dashboard-table th, .dashboard-table td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .dashboard-table th {
+            font-weight: 700;
+            background-color: #F8FAFC;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .dashboard-table tr:hover {
+            background-color: #F1F5F9;
+        }
+        .dashboard-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Custom Message Box - Adapted for sleek design */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Slightly darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out; /* Smoother transition */
+        }
+        .message-box-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .message-box-content {
+            background-color: #FFFFFF; /* White background for modal */
+            padding: 3.5rem 3rem; /* More padding */
+            border-radius: 1.5rem; /* Larger border-radius */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45); /* Deeper shadow */
+            text-align: center;
+            max-width: 90%;
+            width: 500px; /* Slightly wider modal */
+            transform: translateY(-40px); /* More pronounced initial translateY */
+            transition: transform 0.5s ease-out; /* Smoother transform */
+            border: 2px solid #3B82F6; /* Bright blue border */
+            color: #1E293B; /* Dark text */
+        }
+        .message-box-overlay.show .message-box-content {
+            transform: translateY(0);
+        }
+        .message-box-content h3 {
+            color: #1D4ED8; /* Darker blue for title */
+            margin-bottom: 1rem;
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 800;
+        }
+        .message-box-content p {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #4A5568; /* Slate-700 for message text */
+        }
+        .message-box-content button {
+            background: linear-gradient(90deg, #EF4444, #DC2626); /* Red gradient for close */
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .message-box-content button:hover {
+            background: linear-gradient(90deg, #DC2626, #EF4444); /* Reverse gradient on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <header class="header-sleek py-4 px-6 md:px-12">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-gray-900">AEV Mod <span class="text-blue-600">Dashboard</span></h1>
+            </div>
+            <div id="logoutButtonContainer" class="hidden">
+                 <button id="logoutBtn" class="btn-submit-sleek px-8 py-3 text-base bg-red-500 hover:bg-red-700">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-12 px-6 md:px-12">
+        <!-- Login Form Section -->
+        <section id="login-section" class="w-full max-w-lg mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-200">
+            <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-6">Mod Login</h2>
+            <p class="text-center text-gray-600 mb-8">Please log in to view the dashboard.</p>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="email" class="sr-only">Email address</label>
+                    <input type="email" id="email" name="email" class="input-field-sleek w-full" placeholder="Email address" required>
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="password" class="input-field-sleek w-full" placeholder="Password" required>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="btn-submit-sleek px-8 py-3 text-base">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Access Denied Message Section -->
+        <section id="access-denied-section" class="w-full max-w-lg mx-auto bg-red-50 p-8 md:p-12 rounded-2xl shadow-xl border border-red-300 hidden">
+             <div class="text-center">
+                <h2 class="text-4xl font-extrabold text-red-600 mb-4">Access Denied</h2>
+                <p class="text-red-800 text-lg">You do not have permission to view this dashboard.</p>
+                <p class="text-red-800 mt-2">Please log in with the correct owner account.</p>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Section -->
+        <section id="dashboard-section" class="w-full" style="display: none;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="stat-card">
+                    <p class="stat-value" id="totalBookingsCount">0</p>
+                    <p class="stat-label">Total Bookings</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-value" id="totalPassengersCount">0</p>
+                    <p class="stat-label">Total Passengers</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-value text-red-600" id="currentUserID">Not authenticated</p>
+                    <p class="stat-label">Authenticated User ID</p>
+                </div>
+            </div>
+
+            <div id="loadingIndicator" class="text-center py-12">
+                <p class="text-gray-500 text-lg">Loading bookings...</p>
+            </div>
+            
+            <div id="emptyState" class="text-center py-12 hidden">
+                <p class="text-gray-500 text-lg">No flight bookings have been made yet.</p>
+            </div>
+
+            <div class="card-background-sleek p-8 md:p-12 overflow-hidden">
+                <h2 class="section-heading-sleek text-center mx-auto mb-10">All Flight Bookings</h2>
+                <div class="dashboard-table-container">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Discord Username</th>
+                                <th>Departure Airport</th>
+                                <th>Arrival Airport</th>
+                                <th>Departure Date</th>
+                                <th>Passengers</th>
+                                <th>Class</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Booking data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Custom Message Box for errors and alerts -->
+    <div id="messageBoxOverlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <h3 id="messageBoxTitle" class="text-2xl font-bold"></h3>
+            <p id="messageBoxText"></p>
+            <button id="messageBoxCloseButton">Close</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD09Wu6-wyIIDKkGi4TKhn4NKax1r7AWUk",
+            authDomain: "flyae-backend.firebaseapp.com",
+            projectId: "flyae-backend",
+            storageBucket: "flyae-backend.firebasestorage.app",
+            messagingSenderId: "610108789668",
+            appId: "1:610108789668:web:ae0d71ab7970b0dbb72731",
+            measurementId: "G-MHQJ6BBW4G"
+        };
+        
+        let app, db, auth;
+        const ALLOWED_USER_UID = "zHFI8DHkslclwOKvydMfdQnWrFh2";
+        const bookingsCollectionPath = `/artifacts/default-app-id/public/data/flight_bookings`;
+
+        // Function to show custom message box
+        function showMessageBox(title, message) {
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+            const messageBoxTitle = document.getElementById('messageBoxTitle');
+            const messageBoxText = document.getElementById('messageBoxText');
+            
+            messageBoxTitle.textContent = title;
+            messageBoxText.textContent = message;
+            messageBoxOverlay.classList.add('show');
+        }
+
+        // Function to hide custom message box
+        function hideMessageBox() {
+            const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+            messageBoxOverlay.classList.remove('show');
+        }
+        
+        // Setup Firebase and Auth listener
+        function setupFirebase() {
+            try {
+                // Initialize Firebase app
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                console.log("Firebase initialized.");
+
+                // Listen for auth state changes
+                onAuthStateChanged(auth, (user) => {
+                    const loginSection = document.getElementById('login-section');
+                    const dashboardSection = document.getElementById('dashboard-section');
+                    const accessDeniedSection = document.getElementById('access-denied-section');
+                    const logoutButtonContainer = document.getElementById('logoutButtonContainer');
+                    const currentUserIDElement = document.getElementById('currentUserID');
+
+                    if (user && user.uid === ALLOWED_USER_UID) {
+                        // User is signed in and is the allowed owner
+                        console.log("Owner authenticated successfully:", user.uid);
+                        currentUserIDElement.textContent = user.uid;
+                        loginSection.style.display = 'none';
+                        accessDeniedSection.style.display = 'none';
+                        dashboardSection.style.display = 'block';
+                        logoutButtonContainer.classList.remove('hidden');
+                        listenForBookings();
+                    } else if (user && user.uid !== ALLOWED_USER_UID) {
+                        // User is signed in but not the owner
+                        console.log("User logged in, but not the owner. UID:", user.uid);
+                        currentUserIDElement.textContent = user.uid;
+                        loginSection.style.display = 'none';
+                        accessDeniedSection.style.display = 'block';
+                        dashboardSection.style.display = 'none';
+                        logoutButtonContainer.classList.remove('hidden');
+                    } else {
+                        // No user is signed in
+                        console.log("No user is authenticated.");
+                        currentUserIDElement.textContent = "Not authenticated";
+                        loginSection.style.display = 'block';
+                        accessDeniedSection.style.display = 'none';
+                        dashboardSection.style.display = 'none';
+                        logoutButtonContainer.classList.add('hidden');
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error setting up Firebase:", error);
+                showMessageBox("Setup Error", `Failed to set up Firebase. Check the console for details. Error: ${error.message}`);
+            }
+        }
+
+        // Listen for real-time updates to the bookings collection
+        function listenForBookings() {
+            if (!db) {
+                console.error("Firestore not initialized.");
+                return;
+            }
+
+            const bookingsRef = collection(db, bookingsCollectionPath);
+            
+            console.log("Listening for data in collection:", bookingsCollectionPath);
+            
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const emptyState = document.getElementById('emptyState');
+            const bookingsTableBody = document.getElementById('bookingsTableBody');
+            
+            // onSnapshot provides real-time updates
+            onSnapshot(bookingsRef, (querySnapshot) => {
+                const bookings = [];
+                let totalPassengers = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    bookings.push({
+                        id: doc.id,
+                        ...data,
+                        timestamp: data.timestamp ? new Date(data.timestamp).toLocaleString() : 'N/A'
+                    });
+                    // Sum up the passengers
+                    totalPassengers += parseInt(data.passengers, 10) || 0;
+                });
+                
+                // Clear the table body
+                bookingsTableBody.innerHTML = '';
+                
+                if (bookings.length > 0) {
+                    loadingIndicator.classList.add('hidden');
+                    emptyState.classList.add('hidden');
+                    
+                    bookings.forEach(booking => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${booking.timestamp}</td>
+                            <td>${booking.discordUsername}</td>
+                            <td>${booking.origin}</td>
+                            <td>${booking.destination}</td>
+                            <td>${booking.flightDate}</td>
+                            <td>${booking.passengers}</td>
+                            <td>${booking.flightClass}</td>
+                        `;
+                        bookingsTableBody.appendChild(row);
+                    });
+                } else {
+                    loadingIndicator.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                }
+                
+                // Update stats
+                document.getElementById('totalBookingsCount').textContent = bookings.length;
+                document.getElementById('totalPassengersCount').textContent = totalPassengers;
+                
+                console.log("Updated bookings data. Total bookings:", bookings.length);
+            }, (error) => {
+                console.error("Error fetching documents:", error);
+                loadingIndicator.classList.add('hidden');
+                showMessageBox("Data Error", "Could not fetch booking data. Please check your Firebase setup and security rules. Error: " + error.message);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const messageBoxCloseButton = document.getElementById('messageBoxCloseButton');
+
+            // Set up Firebase and the authentication listener on page load
+            setupFirebase();
+
+            // --- LOGIN FORM LOGIC ---
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    // The onAuthStateChanged listener will handle UI changes on successful login
+                    console.log("Login successful. Checking user permissions...");
+                } catch (error) {
+                    console.error("Login failed:", error);
+                    let errorMessage = "An error occurred during login. Please try again.";
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                        errorMessage = "Invalid email or password.";
+                    }
+                    showMessageBox("Login Failed", errorMessage);
+                }
+            });
+
+            // --- LOGOUT LOGIC ---
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    console.log("User logged out successfully.");
+                    // onAuthStateChanged listener will handle UI update
+                } catch (error) {
+                    console.error("Error signing out:", error);
+                    showMessageBox("Logout Error", "Failed to log out. Please try again.");
+                }
+            });
+
+            // Close message box when button is clicked
+            messageBoxCloseButton.addEventListener('click', hideMessageBox);
+        });
+
+    </script>
+</body>
+</html>
